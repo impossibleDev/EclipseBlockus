@@ -22,8 +22,8 @@ public class ViewConstants {
         teamColors.put(Team.BLUE, Color.BLUE);
 
         //CARD IMAGES
-        cardImages.put(CardTypes.SKIP, new ImageIcon(ViewConstants.class.getResource("/cards/skip.jpg")));
-        cardImages.put(CardTypes.BOMB, new ImageIcon(ViewConstants.class.getResource("/cards/bomb.jpg")));
+        cardImages.put(CardTypes.SKIP, new ImageIcon("resources/cards/skip.jpg"));
+        cardImages.put(CardTypes.BOMB, new ImageIcon("resources/cards/bomb.jpg"));
     }
 
 }

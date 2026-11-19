@@ -3,14 +3,13 @@ package controller;
 import view.AppFrame;
 
 public class AppController {
-
-    private AppFrame view = new AppFrame();
+	private AppFrame view = new AppFrame();
     private GameController gameController;
     private MenuController menuController;
 
     private void newGame(){
-        gameController = new GameController(view.getGameScreen());
-        menuController = new MenuController(view.getMenuScreen());
+        gameController = new GameController(this, view.getGameScreen());
+        
         //new GameController(settings1, settings2, etc);
         // input paramters of settings stuff
     }
@@ -18,8 +17,22 @@ public class AppController {
         //close window
     }
     public AppController(){
-        //test code her for now
+    	menuController = new MenuController(this, view.getMenuScreen());
+        
+        view.toMenuScreen();
+        //test code here for now
         newGame();
-        view.toGameScreen();
+    }
+    
+    public AppFrame getView() {
+    	return view;
+    }
+    
+    public void toGameScreen() {
+    	view.toGameScreen();
+    }
+    
+    public void toMenuScreen() {
+    	view.toMenuScreen();
     }
 }

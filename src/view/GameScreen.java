@@ -12,7 +12,7 @@ import javax.swing.*;
 public class GameScreen extends Screen{
 
     //Ui elements
-    private BoardPanel boardPanel;
+    public BoardPanel boardPanel; //set private later
     private TeamPanel teamPanel;
     private PiecesPanel piecesPanel;
     private Piece dragPiece;
@@ -51,5 +51,10 @@ public class GameScreen extends Screen{
         teamPanel.setBounds(100,50,300,800);;
         piecesPanel.setBounds(getWidth()-250,50,150,400);
     }
+
+	public void selectPiece(Piece piece) {
+		piecesPanel.selectPiece(piece);
+		
+	}
 
 }

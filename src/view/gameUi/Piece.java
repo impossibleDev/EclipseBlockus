@@ -17,6 +17,7 @@ public class Piece extends JButton {
 
     public Piece(boolean[][] data, Team team){
         setData(data);
+        System.out.print(team.name());
         setTeam(team);
     }
 

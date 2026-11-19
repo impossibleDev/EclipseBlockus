@@ -13,21 +13,27 @@ import view.gameUi.Piece;
 //Aiden
 public class GameController implements ActionListener, MouseListener {
     //controls the GameScreen input and stuff
+	private AppController appController;
     private Game model = new Game();
     private GameScreen gameScreen;
 
-    public GameController(GameScreen gamescreen){
+    public GameController(AppController appController, GameScreen gamescreen){
+    	this.appController = appController;
         this.gameScreen = gamescreen;
         gameScreen.update(model.getBoard());
         //Adding listeners
         for (Piece piece : gamescreen.getPiecePanel().getPieces()){
+
             piece.addActionListener(this);
             piece.addMouseListener(this);
         };
+        gamescreen.boardPanel.addMouseListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+    	System.out.print("click piece");
+    	appController.toMenuScreen();
         if (e.getSource() instanceof Piece) {
             Piece clickedPiece = (Piece) e.getSource();
             // handle piece click, selected piece is this piece
@@ -51,9 +57,12 @@ public class GameController implements ActionListener, MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
+    	System.out.print("selcaaz");
         if (e.getSource() instanceof Piece) {
-            Piece clickedPiece = (Piece) e.getSource();
+//            Piece clickedPiece = (Piece) e.getSource();
             // handle piece hover animation
+        	System.out.print("selct piece");
+        	gameScreen.selectPiece((Piece) e.getSource());
         }
     }
 

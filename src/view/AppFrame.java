@@ -36,7 +36,8 @@ public class AppFrame extends JFrame {
 
 
     public void toGameScreen(){
-        setScreen(menuScreen);
+        setScreen(gameScreen);
+        screen.resize();
 //        gameScreen.setOverlay(new HelpPanelOverlay());
     }
 
@@ -61,6 +62,7 @@ public class AppFrame extends JFrame {
         screen.setVisible(true);
         add(screen);
         screen.resize();
+        screen.repaint();
     }
 
 

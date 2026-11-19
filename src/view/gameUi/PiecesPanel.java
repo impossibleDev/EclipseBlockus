@@ -39,4 +39,16 @@ public class PiecesPanel extends JPanel {
     public Piece[] getPieces() {
         return pieces;
     }
+    
+    public void selectPiece(Piece piece) {
+    	if (selectedPiece!=piece) {//if piece is not already selected
+    		selectedPiece = piece;
+    		selectedPiece.setLocation(selectedPiece.getX(), selectedPiece.getY()-5);
+    	}
+    }
+    
+    public void  deselectPiece() {
+		selectedPiece.setLocation(selectedPiece.getX(), selectedPiece.getY()+5);
+		selectedPiece = null;
+    }
 }

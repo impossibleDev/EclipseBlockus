@@ -1,6 +1,5 @@
 package view;
 
-import shared.GameFont;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +10,7 @@ import java.io.File;
 //font code copied form my g11 project
 public class GuiUtil {
 
-    public static final Font PIXELFONT = loadCustomFont("Font/PressStart2P-Regular.ttf");
+    public static final Font PIXELFONT = loadCustomFont("resources/fonts/PressStart2P-Regular.ttf");
     public static Font PIXELFONTBIG = PIXELFONT.deriveFont(30f);
     public static Font PIXELFONTMEDIUM = PIXELFONT.deriveFont(20f);
     public static Font PIXELFONTSMALL = PIXELFONT.deriveFont(10f);
@@ -35,7 +34,7 @@ public class GuiUtil {
 
     public static JButton createButton(String text) { //since all buttons same, helper method here
         JButton button = new JButton(text);
-        button.setFont(GameFont.get(16f));
+        button.setFont(PIXELFONTMEDIUM);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setMaximumSize(new Dimension(200, 55));
         button.setOpaque(true);

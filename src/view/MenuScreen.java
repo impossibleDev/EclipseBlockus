@@ -2,8 +2,7 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.border.Border;
-import shared.GameFont;
+
 // melinda
 public class MenuScreen extends Screen {
     // fields
@@ -18,7 +17,7 @@ public class MenuScreen extends Screen {
         add(Box.createVerticalStrut(100));
         
         title = new JLabel("BLOKUS", SwingConstants.CENTER);
-        title.setFont(GameFont.get(48f));
+        title.setFont(GuiUtil.PIXELFONTBIG);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(title);
         
@@ -36,18 +35,6 @@ public class MenuScreen extends Screen {
         add(buttonPanel);
     }
     
-    private JButton createButton(String text) { //since all buttons same, helper method here
-        JButton button = new JButton(text);
-        button.setFont(GameFont.get(16f));
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setMaximumSize(new Dimension(200, 55));
-        button.setOpaque(true);
-        button.setFocusable(false);
-        button.setBackground(Color.WHITE);
-        button.setForeground(Color.BLACK);
-        button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-        return button;
-    }
     // connect controller to buttons
     public void setButtonListener(ActionListener listener) {
         for (JButton button : buttons) {
@@ -60,6 +47,11 @@ public class MenuScreen extends Screen {
         revalidate();
         repaint();
 //        super.resize();
+    }
+    
+    //get ui elements
+    public JButton getPlayButton() {
+    	return buttons[0];
     }
 }
 
