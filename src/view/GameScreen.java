@@ -52,6 +52,16 @@ public class GameScreen extends Screen{
         piecesPanel.setBounds(getWidth()-250,50,150,400);
     }
 
+	public void hoverPiece(Piece piece) {
+		piecesPanel.hoverPiece(piece);
+		
+	}
+	
+	public void dehoverPiece() {
+		piecesPanel.dehoverPiece();
+		
+	}
+	
 	public void selectPiece(Piece piece) {
 		piecesPanel.selectPiece(piece);
 		

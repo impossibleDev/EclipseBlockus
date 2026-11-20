@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import model.Game;
 import view.*;
 import view.gameUi.Piece;
@@ -27,15 +26,16 @@ public class GameController implements ActionListener, MouseListener {
             piece.addActionListener(this);
             piece.addMouseListener(this);
         };
+//        Piece testPiece = gamescreen.getPiecePanel().getTestPiece();
+//        testPiece.addActionListener(this);
+//        testPiece.addMouseListener(this);
         gamescreen.boardPanel.addMouseListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    	System.out.print("click piece");
-    	appController.toMenuScreen();
         if (e.getSource() instanceof Piece) {
-            Piece clickedPiece = (Piece) e.getSource();
+            gameScreen.selectPiece((Piece) e.getSource());
             // handle piece click, selected piece is this piece
         }
     }
@@ -57,17 +57,17 @@ public class GameController implements ActionListener, MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-    	System.out.print("selcaaz");
         if (e.getSource() instanceof Piece) {
-//            Piece clickedPiece = (Piece) e.getSource();
             // handle piece hover animation
-        	System.out.print("selct piece");
-        	gameScreen.selectPiece((Piece) e.getSource());
+        	gameScreen.hoverPiece((Piece)e.getSource());
         }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+    	if (e.getSource() instanceof Piece) {
+    		// handle piece hover animation
+    		gameScreen.dehoverPiece();
+      }
     }
 }

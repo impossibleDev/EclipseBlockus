@@ -1,37 +1,27 @@
 package view.gameUi;
 
+import javax.swing.*;
 import shared.PieceData;
 import shared.Team;
-
-import javax.swing.*;
 
 //Aiden
 
 //TODO someone work on autolayout/positioning the pieces[] !!!
 public class PiecesPanel extends JPanel {
 
-    Piece[] pieces;
-    Piece selectedPiece;
+    private Piece[] pieces;
+    private Piece hoveredPiece;
+    private Piece selectedPiece;
 
     public PiecesPanel(){
         super(null);
 //        setSize(200,600);
-        //TEST PIECR RENDERER
-        boolean[][] dataTest = new boolean[4][2];
-        dataTest[0][0]=true;
-        dataTest[0][1]=true;
-        dataTest[1][0]=true;
-        dataTest[1][1]=true;
-        dataTest[2][0]=true;
-        dataTest[3][1]=true;
-        Piece testPiece = new Piece(dataTest, Team.RED);
-        add(testPiece);
-
         //load pieces from PieceData
         pieces = new Piece[PieceData.pieces.length];
         for (int i=0; i< pieces.length; i++){
             pieces[i] = new Piece(PieceData.pieces[i], Team.RED); //red for testing, dosent matter
             add(pieces[i]);
+            pieces[i].setLocation(20,20);
         }
 
     }
@@ -39,16 +29,47 @@ public class PiecesPanel extends JPanel {
     public Piece[] getPieces() {
         return pieces;
     }
+
+    
+	public void hoverPiece(Piece piece) {
+		if (piece == null) {
+			return;
+		}
+		if (hoveredPiece == piece) {
+			dehoverPiece();
+			return;
+		}
+		dehoverPiece();
+		hoveredPiece = piece;
+		hoveredPiece.setLocation(hoveredPiece.getX(), hoveredPiece.getY() - 5);
+	}
+    
+    public void  dehoverPiece() {
+    	if (hoveredPiece!=null) {
+    		hoveredPiece.setLocation(hoveredPiece.getX(), hoveredPiece.getY()+5);
+    		hoveredPiece = null;
+    	}
+		
+    }
     
     public void selectPiece(Piece piece) {
-    	if (selectedPiece!=piece) {//if piece is not already selected
-    		selectedPiece = piece;
-    		selectedPiece.setLocation(selectedPiece.getX(), selectedPiece.getY()-5);
+    	if (piece == null) {
+			return;
+		}
+		if (selectedPiece == piece) {
+			deselectPiece();
+			return;
+		}
+		deselectPiece();
+		selectedPiece = piece;
+		selectedPiece.altSkinOn(true);
+    }
+    
+    public void deselectPiece() {
+    	if (selectedPiece!=null) {
+    		selectedPiece.altSkinOn(false);
+    		selectedPiece = null;
     	}
     }
     
-    public void  deselectPiece() {
-		selectedPiece.setLocation(selectedPiece.getX(), selectedPiece.getY()+5);
-		selectedPiece = null;
-    }
 }
