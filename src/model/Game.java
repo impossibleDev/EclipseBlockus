@@ -1,6 +1,7 @@
 package model;
 
 import shared.GameConstants;
+import shared.PiecePlacer;
 import shared.Team;
 
 public class Game {
@@ -24,8 +25,18 @@ public class Game {
     public void startGame(){
 
     }
-    public void playTurn(){//playTurn(shape???)
+    public void playTurn(int posX, int posY, boolean[][]pieceData){
+    	if (!PiecePlacer.validMove(board, posX, posY, pieceData)) {
+    		throw new IllegalArgumentException("Invalid Move");
+    	}
         //place shape
+    	for (int x=0; x<pieceData.length; x++) {
+    		for (int y=0; y<pieceData[0].length; y++) {
+    			if (pieceData[x][y]) {
+    				board[x+posX][y+posY] = Team.RED; //TODO place piece with proper team enum
+    			}
+        	}
+    	}
         //next turn
     }
 

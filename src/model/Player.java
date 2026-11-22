@@ -11,12 +11,19 @@ public class Player {
 //    double time;
 
     public Player(Team team){
+    	this.team = team;
+    	
+    	
+    	//test Deck
         deck[0] = CardTypes.SKIP;
         deck[1] = CardTypes.EXPLODE;
         deck[2] = CardTypes.SPAWNBLOCK;
         deck[3] = CardTypes.SKIP;
     }
-
+    
+    public Team getTeam() {
+    	return team;
+    }
     public CardTypes[] getDeck(){
         return deck;
     }

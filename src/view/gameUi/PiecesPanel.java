@@ -23,7 +23,7 @@ public class PiecesPanel extends JLabel {
         for (int i=0; i< pieces.length; i++){
             pieces[i] = new Piece(PieceData.pieces[i], Team.RED); //red for testing, dosent matter
             add(pieces[i]);
-            pieces[i].setLocation(20,20);
+            pieces[i].setLocation(20,i*80);
         }
 
     }

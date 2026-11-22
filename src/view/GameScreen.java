@@ -15,7 +15,6 @@ public class GameScreen extends Screen{
     private BoardPanel boardPanel;
     private TeamPanel teamPanel;
     private PiecesPanel piecesPanel;
-    private Piece dragPiece;
     private JButton settingsButton;
     JLabel[] teamBgCorner;
 
@@ -46,6 +45,7 @@ public class GameScreen extends Screen{
 
     //Get UI Elements
     public PiecesPanel getPiecePanel(){ return piecesPanel;}
+    public BoardPanel getBoardPanel() { return boardPanel;}; 
     public JButton getSettingsButton() {return settingsButton;}
     @Override
     public void resize(){

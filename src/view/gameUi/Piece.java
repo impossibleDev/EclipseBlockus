@@ -33,23 +33,35 @@ public class Piece extends JButton {
     //custom paint
     @Override
     protected void paintComponent(Graphics g) {
-//        super.paintComponent(g); //draws the native ui button, not needed
-    	
-    	if (altSkin) {// if altSkin==true, white border on the entire thing
+
+    	//draw outlines if altSkin==true
+    	if (altSkin) {
     		g.setColor(Color.WHITE);
-    		g.fillRect(0, 0, getWidth(), getHeight());
+            for (int x = 0; x< data.length; x++){
+                for (int y=0; y<data[0].length; y++){
+                    //draw one tile
+                    if (data[x][y]) {
+                        g.fillRect(x*blockSize, y*blockSize, blockSize, blockSize);
+                    }
+                }
+            }
+            
     	}
+    	
+    	//draw tiles
+    	g.setColor(teamColors.get(team));
         for (int x = 0; x< data.length; x++){
             for (int y=0; y<data[0].length; y++){
-                //draw tile
-                g.setColor(teamColors.get(team));
-                if (data[x][y])
-                    g.fillRoundRect(x*blockSize, y*blockSize, blockSize-blockPadding, blockSize-blockPadding, 2,2);
+                //draw one tile
+                if (data[x][y]) {
+                    g.fillRoundRect(x*blockSize + blockPadding/2, y*blockSize  + blockPadding/2, blockSize-blockPadding, blockSize-blockPadding, 2,2);
+                }
             }
         }
+        
     }
     
-    //aka appearance when selected
+    //aka appearance when selected, if there is outline or not
     public void altSkinOn(boolean altSkin) {
     	this.altSkin = altSkin;
     	repaint();

@@ -4,30 +4,40 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
 import model.Game;
+import shared.PieceData;
 import view.*;
 import view.gameUi.Piece;
 
 
 //Aiden
-public class GameController implements ActionListener, MouseListener {
+public class GameController implements ActionListener, MouseListener, MouseMotionListener {
     //controls the GameScreen input and stuff
 	private AppController appController;
     private Game model = new Game();
     private GameScreen gameScreen;
-
-    public GameController(AppController appController, GameScreen gamescreen){
+    
+    private boolean[][] previewPiece;
+    
+    public GameController(AppController appController, GameScreen gameScreen){
     	this.appController = appController;
-        this.gameScreen = gamescreen;
+        this.gameScreen = gameScreen;
         gameScreen.update(model.getBoard());
         //Adding listeners
-        gamescreen.getSettingsButton().addActionListener(this);;
-        for (Piece piece : gamescreen.getPiecePanel().getPieces()){
+        gameScreen.getSettingsButton().addActionListener(this);;
+        for (Piece piece : gameScreen.getPiecePanel().getPieces()){
 
             piece.addActionListener(this);
             piece.addMouseListener(this);
         };
 //        gamescreen.boardPanel.addMouseListener(this);
+        gameScreen.getBoardPanel().addMouseMotionListener(this);
+        gameScreen.getBoardPanel().addMouseListener(this);
+        
+        //TEST CODE
+        previewPiece = PieceData.pieces[0]; //remove ts later
     }
 
     @Override
@@ -46,12 +56,22 @@ public class GameController implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        //if mouse is inside boardpanel, add snapped pos to board, play ur turn!
+        
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+    	//if mouse is inside boardpanel, add snapped pos to board, play ur turn!
+    	if (e.getSource()== gameScreen.getBoardPanel()) {
+    		//add piece if is valid
+    		
+    		//TODO piece validation
+    		if (true) {//add piecevalidation method here
+    			//place piece code goes here
+    			model.playTurn(gameScreen.getBoardPanel().getPreviewX(), gameScreen.getBoardPanel().getPreviewY(), previewPiece);
+    			
+    		}
+    	}
     }
 
     @Override
@@ -74,4 +94,19 @@ public class GameController implements ActionListener, MouseListener {
     		gameScreen.dehoverPiece();
       }
     }
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		//if inside boardPanel and selected piece, preview it
+		
+		gameScreen.getBoardPanel().previewPiece(e.getX(), e.getY(), previewPiece);// from previewPiece boolean[][] that i maek later ahh		
+		
+	}
 }
