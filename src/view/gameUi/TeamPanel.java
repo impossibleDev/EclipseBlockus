@@ -32,7 +32,7 @@ public class TeamPanel extends JLabel {
 
     //UI ELEMNTS
     private TimerIcon timerIcon = new TimerIcon(GameConstants.maxTime);
-    private PlayerCard[] playerCard = new PlayerCard[4];
+    private PlayerCard[] playerCards = new PlayerCard[4];
     private JLabel[] currentDeck = new JLabel[GameConstants.deckSize];
     private JLabel deckContainer = new JLabel();
 
@@ -41,9 +41,9 @@ public class TeamPanel extends JLabel {
 
         //Init PlayerCards
         for (int i=0; i<4; i++){
-            playerCard[i] = new PlayerCard();
-            playerCard[i].setLocation(0, i*playerCardDistance);
-            add(playerCard[i]);
+            playerCards[i] = new PlayerCard();
+            playerCards[i].setLocation(0, i*playerCardDistance);
+            add(playerCards[i]);
         }
         
         
@@ -61,15 +61,19 @@ public class TeamPanel extends JLabel {
         //Init timerIcon
         timerIcon.setLocation(150, 500);
         add(timerIcon);
-        update(new Player(Team.RED)); //test, remove later
     }
     
-	public void update(Player player) {
-		deckContainer.setIcon(deckImages.get(player.getTeam()));
+	public void update(Player currentPlayer, Player[] players) {
+		//update playerCards
+		for (int i=0; i<players.length; i++) {
+			playerCards[i].update(players[i]);
+		}
+		//update deck
+		deckContainer.setIcon(deckImages.get(currentPlayer.getTeam()));
 		
 		for (int i = 0; i < currentDeck.length; i++) {
-			if (player.getDeck()[i] != null) {
-				currentDeck[i].setIcon(cardImages.get(player.getDeck()[i]));
+			if (currentPlayer.getDeck()[i] != null) {
+				currentDeck[i].setIcon(cardImages.get(currentPlayer.getDeck()[i]));
 			}
 		}
     }

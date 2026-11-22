@@ -21,6 +21,10 @@ public class Piece extends JButton {
         setTeam(team);
     }
 
+    public boolean[][] getData(){
+        return data;
+    }
+    
     public void setData(boolean[][] data){
         this.data = data;
         setSize(blockSize*data.length, blockSize*data[0].length);

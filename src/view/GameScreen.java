@@ -8,6 +8,8 @@ import view.gameUi.TeamPanel;
 
 import javax.swing.*;
 
+import model.Player;
+
 //Aiden
 public class GameScreen extends Screen{
 
@@ -35,7 +37,9 @@ public class GameScreen extends Screen{
 
     }
 
-    public void update(Team[][] board){
+    public void update(Player currentPlayer, Player[] players, Team[][] board){
+    	this.teamPanel.update(currentPlayer, players);
+    	this.piecesPanel.update(currentPlayer);
         this.boardPanel.updateBoard(board);
     }
 
@@ -43,10 +47,11 @@ public class GameScreen extends Screen{
 
     }
 
-    //Get UI Elements
+    //Getters for UI Elements
     public PiecesPanel getPiecePanel(){ return piecesPanel;}
     public BoardPanel getBoardPanel() { return boardPanel;}; 
     public JButton getSettingsButton() {return settingsButton;}
+    
     @Override
     public void resize(){
         super.resize();

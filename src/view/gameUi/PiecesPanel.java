@@ -1,6 +1,8 @@
 package view.gameUi;
 
 import javax.swing.*;
+
+import model.Player;
 import shared.PieceData;
 import shared.Team;
 
@@ -17,7 +19,7 @@ public class PiecesPanel extends JLabel {
     public PiecesPanel(){
         super(img);
         setOpaque(false);
-//        setSize(200,600);
+        
         //load pieces from PieceData
         pieces = new Piece[PieceData.pieces.length];
         for (int i=0; i< pieces.length; i++){
@@ -71,6 +73,12 @@ public class PiecesPanel extends JLabel {
     	if (selectedPiece!=null) {
     		selectedPiece.altSkinOn(false);
     		selectedPiece = null;
+    	}
+    }
+    
+    public void update(Player currentPlayer) {
+    	for (Piece piece : pieces) {
+    		piece.setTeam(currentPlayer.getTeam());
     	}
     }
     

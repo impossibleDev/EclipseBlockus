@@ -6,11 +6,21 @@ import shared.Team;
 
 public class Game {
 
-    private Team currentTeam;
+    private Player currentPlayer;
+    private Player[] players = new Player[GameConstants.playerSize];
     private Team[][] board;
+    private static final Team[] order = {Team.BLUE, Team.GREEN, Team.YELLOW, Team.RED};
 
     //CONSTRUCTOR
     public Game(){
+    	//INIT PLAYERS
+    	for (int i=0; i<players.length; i++) {
+    		players[i] = new Player(order[i]);
+    	}
+    	currentPlayer = players[0];
+    	
+    	
+    	//INIT BOARD
         board = new Team[GameConstants.boardSize][GameConstants.boardSize];
         for (int x = 0; x < GameConstants.boardSize; x++){
             for (int y = 0; y < GameConstants.boardSize; y++){
@@ -33,7 +43,7 @@ public class Game {
     	for (int x=0; x<pieceData.length; x++) {
     		for (int y=0; y<pieceData[0].length; y++) {
     			if (pieceData[x][y]) {
-    				board[x+posX][y+posY] = Team.RED; //TODO place piece with proper team enum
+    				board[x+posX][y+posY] = currentPlayer.getTeam();
     			}
         	}
     	}
@@ -47,8 +57,14 @@ public class Game {
     public Team[][] getBoard(){
         return board;
     }
+    
+    public Player getCurrentPlayer() {
+    	return currentPlayer;
+    }
 
-
+    public Player[] getPlayers() {
+    	return players;
+    }
 
 
 

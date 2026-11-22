@@ -20,11 +20,10 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
     private GameScreen gameScreen;
     
     private boolean[][] previewPiece;
-    
     public GameController(AppController appController, GameScreen gameScreen){
     	this.appController = appController;
         this.gameScreen = gameScreen;
-        gameScreen.update(model.getBoard());
+        gameScreen.update(model.getCurrentPlayer(), model.getPlayers(), model.getBoard());
         //Adding listeners
         gameScreen.getSettingsButton().addActionListener(this);;
         for (Piece piece : gameScreen.getPiecePanel().getPieces()){
@@ -49,7 +48,9 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
     		
     	}
     	else if (e.getSource() instanceof Piece) {
-            gameScreen.selectPiece((Piece) e.getSource());
+    		Piece piece = (Piece) e.getSource();
+    		previewPiece = piece.getData();
+            gameScreen.selectPiece(piece);
             // handle piece click, selected piece is this piece
         }
     }
@@ -69,7 +70,7 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
     		if (true) {//add piecevalidation method here
     			//place piece code goes here
     			model.playTurn(gameScreen.getBoardPanel().getPreviewX(), gameScreen.getBoardPanel().getPreviewY(), previewPiece);
-    			
+    			gameScreen.update(model.getCurrentPlayer(), model.getPlayers(), model.getBoard());
     		}
     	}
     }
@@ -106,7 +107,7 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 		// TODO Auto-generated method stub
 		//if inside boardPanel and selected piece, preview it
 		
-		gameScreen.getBoardPanel().previewPiece(e.getX(), e.getY(), previewPiece);// from previewPiece boolean[][] that i maek later ahh		
+		gameScreen.getBoardPanel().previewPiece(e.getX(), e.getY(), previewPiece);
 		
 	}
 }
