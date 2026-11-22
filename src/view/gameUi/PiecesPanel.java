@@ -7,14 +7,16 @@ import shared.Team;
 //Aiden
 
 //TODO someone work on autolayout/positioning the pieces[] !!!
-public class PiecesPanel extends JPanel {
-
+public class PiecesPanel extends JLabel {
+	
+	private static final ImageIcon img = new ImageIcon("resources/ui/PiecePanelFrame.png");
     private Piece[] pieces;
     private Piece hoveredPiece;
     private Piece selectedPiece;
 
     public PiecesPanel(){
-        super(null);
+        super(img);
+        setOpaque(false);
 //        setSize(200,600);
         //load pieces from PieceData
         pieces = new Piece[PieceData.pieces.length];

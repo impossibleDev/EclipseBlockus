@@ -20,15 +20,12 @@ public class PlayerCard extends JLabel {
     JLabel[] deck = new JLabel[GameConstants.deckSize];
 
     public PlayerCard(){
-        super("w player card");
-        setSize(200,100);
-        setOpaque(true);
-        setBackground(Color.BLUE);
+        setSize(250,110);
 
         //init deck icons
         for (int i=0; i<deck.length; i++){
             deck[i] = new JLabel("🃏");
-            deck[i].setBounds(10+(int)(iconSize+iconPadding)*i,30,iconSize,iconSize);
+            deck[i].setBounds(10+(int)(iconSize+iconPadding)*i,40,iconSize,iconSize);
             add(deck[i]);
         }
         update(new Player(Team.RED)); //TEST, REMOVE LATER!!!

@@ -12,8 +12,8 @@ public class Player {
 
     public Player(Team team){
         deck[0] = CardTypes.SKIP;
-//        deck[1] = CardTypes.BOMB;
-        deck[2] = CardTypes.BOMB;
+        deck[1] = CardTypes.EXPLODE;
+        deck[2] = CardTypes.SPAWNBLOCK;
         deck[3] = CardTypes.SKIP;
     }
 

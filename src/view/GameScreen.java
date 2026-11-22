@@ -12,10 +12,11 @@ import javax.swing.*;
 public class GameScreen extends Screen{
 
     //Ui elements
-    public BoardPanel boardPanel; //set private later
+    private BoardPanel boardPanel;
     private TeamPanel teamPanel;
     private PiecesPanel piecesPanel;
     private Piece dragPiece;
+    private JButton settingsButton;
     JLabel[] teamBgCorner;
 
     //Constructor
@@ -25,10 +26,11 @@ public class GameScreen extends Screen{
         boardPanel = new BoardPanel();
         teamPanel = new TeamPanel();
         piecesPanel = new PiecesPanel();
-
+        settingsButton = GuiUtil.createButton(ViewConstants.settingsImage);
         add(boardPanel);
         add(teamPanel);
         add(piecesPanel);
+        add(settingsButton);
 
         boardPanel.setVisible(true);
 
@@ -44,12 +46,14 @@ public class GameScreen extends Screen{
 
     //Get UI Elements
     public PiecesPanel getPiecePanel(){ return piecesPanel;}
+    public JButton getSettingsButton() {return settingsButton;}
     @Override
     public void resize(){
         super.resize();
         boardPanel.setBounds((int)(getWidth()/2-200),50,400,400);
-        teamPanel.setBounds(100,50,300,800);;
-        piecesPanel.setBounds(getWidth()-250,50,150,400);
+        teamPanel.setBounds(100,50,250,660);;
+        piecesPanel.setBounds(getWidth()-250,50,221,480);
+        settingsButton.setBounds(getWidth()-70,10,60,60);
     }
 
 	public void hoverPiece(Piece piece) {

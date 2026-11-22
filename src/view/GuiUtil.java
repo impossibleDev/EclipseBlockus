@@ -32,7 +32,7 @@ public class GuiUtil {
         }
     }
 
-    public static JButton createButton(String text) { //since all buttons same, helper method here
+    public static JButton createButton(String text) { //mainly for menu screen
         JButton button = new JButton(text);
         button.setFont(PIXELFONTMEDIUM);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -42,6 +42,16 @@ public class GuiUtil {
         button.setBackground(Color.WHITE);
         button.setForeground(Color.BLACK);
         button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        return button;
+    }
+    
+    public static JButton createButton(ImageIcon img) { //creates button from imageIcon
+        JButton button = new JButton(img);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+        button.setOpaque(false);
+//        button.setMargin(new Insets(0, 0, 0, 0)); // Removes extra padding around the icon???
         return button;
     }
 

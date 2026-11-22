@@ -1,13 +1,20 @@
 package view;
 
 import view.overlay.HelpPanelOverlay;
+import view.overlay.Overlay;
 
 import javax.swing.*;
+
+import java.awt.BorderLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 //Aiden
 public class AppFrame extends JFrame {
+	
+	//OVERLAY
+	private Overlay currentOverlay;
+	private HelpPanelOverlay helpPanelOverlay = new HelpPanelOverlay();
     //SCREENS
     private GameScreen gameScreen = new GameScreen();
     private MenuScreen menuScreen = new MenuScreen();
@@ -64,6 +71,23 @@ public class AppFrame extends JFrame {
         screen.resize();
         screen.repaint();
     }
+    
+    public void setOverlayHelpPanel() {
+    	setOverlay(helpPanelOverlay);
+    }
+    private void setOverlay(Overlay overlay){
+        removeOverlay();
+        currentOverlay = overlay;
+        add(overlay, BorderLayout.CENTER);
+        setComponentZOrder(overlay, 0);
+        revalidate();
+        repaint();
+    }
 
+    public void removeOverlay(){
+        if (currentOverlay!=null){
+            remove(currentOverlay);
+        }
+    }
 
 }

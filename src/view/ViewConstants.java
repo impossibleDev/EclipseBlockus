@@ -8,10 +8,20 @@ import java.awt.*;
 import java.util.EnumMap;
 
 public class ViewConstants {
+	
+	
+	//enumMaps
     public static final EnumMap<Team, Color> teamColors = new EnumMap<>(Team.class);
     public static final EnumMap<CardTypes, ImageIcon> cardImages = new EnumMap<>(CardTypes.class);
+    
+    //numbers
     public static final int blockSize = 20; //or mabye blockSize is dynmaic to JPanle size?
     public static final int blockPadding = 2;
+    
+    //imageIcons
+    public static final ImageIcon settingsImage = new ImageIcon("resources/ui/SettingsButton.png");
+    
+    //automatically runs
     static {
 
         //TEAM COLORS
@@ -22,8 +32,9 @@ public class ViewConstants {
         teamColors.put(Team.BLUE, Color.BLUE);
 
         //CARD IMAGES
-        cardImages.put(CardTypes.SKIP, new ImageIcon("resources/cards/skip.jpg"));
-        cardImages.put(CardTypes.BOMB, new ImageIcon("resources/cards/bomb.jpg"));
+        cardImages.put(CardTypes.SKIP, new ImageIcon("resources/cards/skip.png"));
+        cardImages.put(CardTypes.EXPLODE, new ImageIcon("resources/cards/explode.png"));
+        cardImages.put(CardTypes.SPAWNBLOCK, new ImageIcon("resources/cards/spawnBlock.png"));
     }
 
 }

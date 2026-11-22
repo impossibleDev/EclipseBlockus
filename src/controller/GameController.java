@@ -21,20 +21,24 @@ public class GameController implements ActionListener, MouseListener {
         this.gameScreen = gamescreen;
         gameScreen.update(model.getBoard());
         //Adding listeners
+        gamescreen.getSettingsButton().addActionListener(this);;
         for (Piece piece : gamescreen.getPiecePanel().getPieces()){
 
             piece.addActionListener(this);
             piece.addMouseListener(this);
         };
-//        Piece testPiece = gamescreen.getPiecePanel().getTestPiece();
-//        testPiece.addActionListener(this);
-//        testPiece.addMouseListener(this);
-        gamescreen.boardPanel.addMouseListener(this);
+//        gamescreen.boardPanel.addMouseListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof Piece) {
+    	if (e.getSource() == gameScreen.getSettingsButton()) {
+    		//open up settings
+    		//BUT FOR NOW, OPEN UP HELP OVERLAY (change later when settings is done)
+    		appController.getView().setOverlayHelpPanel();
+    		
+    	}
+    	else if (e.getSource() instanceof Piece) {
             gameScreen.selectPiece((Piece) e.getSource());
             // handle piece click, selected piece is this piece
         }
