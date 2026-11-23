@@ -7,6 +7,7 @@ import shared.Team;
 public class Game {
 
     private Player currentPlayer;
+    private int currentPlayerIndex = 0;
     private Player[] players = new Player[GameConstants.playerSize];
     private Team[][] board;
     private static final Team[] order = {Team.BLUE, Team.GREEN, Team.YELLOW, Team.RED};
@@ -48,6 +49,11 @@ public class Game {
         	}
     	}
         //next turn
+    	if (currentPlayerIndex == order.length-1)
+    		currentPlayerIndex=0;
+    	else
+    		currentPlayerIndex++;
+    	currentPlayer = players[currentPlayerIndex];
     }
 
     public boolean isGameOver(){

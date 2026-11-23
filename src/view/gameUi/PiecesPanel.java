@@ -34,6 +34,18 @@ public class PiecesPanel extends JLabel {
         return pieces;
     }
 
+    public int getPieceNum(Piece piece) {
+    	for (int i = 0; i < pieces.length; i++) {
+            if (pieces[i] == piece) {
+                return i;
+            }
+        }
+    	throw new IllegalArgumentException("Piece does not belong to PiecePanel");
+    }
+    
+    public Piece getSelectedPiece() {
+    	return selectedPiece;
+    }
     
 	public void hoverPiece(Piece piece) {
 		if (piece == null) {
@@ -60,10 +72,10 @@ public class PiecesPanel extends JLabel {
     	if (piece == null) {
 			return;
 		}
-		if (selectedPiece == piece) {
-			deselectPiece();
-			return;
-		}
+//		if (selectedPiece == piece) {
+//			deselectPiece();
+//			return;
+//		}
 		deselectPiece();
 		selectedPiece = piece;
 		selectedPiece.altSkinOn(true);

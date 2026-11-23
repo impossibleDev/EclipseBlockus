@@ -1,11 +1,11 @@
 package view;
 
-import view.overlay.HelpPanelOverlay;
-import view.overlay.Overlay;
+
+import view.overlay.*;
 
 import javax.swing.*;
 
-import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -15,6 +15,7 @@ public class AppFrame extends JFrame {
 	//OVERLAY
 	private Overlay currentOverlay;
 	private HelpPanelOverlay helpPanelOverlay = new HelpPanelOverlay();
+    private final JLayeredPane layeredPane = new JLayeredPane();
     //SCREENS
     private GameScreen gameScreen = new GameScreen();
     private MenuScreen menuScreen = new MenuScreen();
@@ -25,16 +26,15 @@ public class AppFrame extends JFrame {
     public AppFrame(){
         super("Blockus");
 
+        layeredPane.setLayout(null);
+        setContentPane(layeredPane);
         setSize(1000, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //automatic screen resizing
-        this.addComponentListener(new ComponentAdapter() {
+        layeredPane.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                if (screen != null) {
-                    screen.resize();
-                }
+                layoutComponents();
             }
         });
 
@@ -44,8 +44,7 @@ public class AppFrame extends JFrame {
 
     public void toGameScreen(){
         setScreen(gameScreen);
-        screen.resize();
-//        gameScreen.setOverlay(new HelpPanelOverlay());
+
     }
 
     public void toMenuScreen(){
@@ -62,31 +61,55 @@ public class AppFrame extends JFrame {
 
     private void setScreen(Screen screen) {
         if (this.screen != null) {
-            this.screen.setVisible(false);
-            remove(this.screen);
+            layeredPane.remove(this.screen);
         }
         this.screen = screen;
         screen.setVisible(true);
-        add(screen);
-        screen.resize();
+        layeredPane.add(screen, JLayeredPane.DEFAULT_LAYER);
+        layoutComponents();
+        revalidate();
         screen.repaint();
     }
     
     public void setOverlayHelpPanel() {
     	setOverlay(helpPanelOverlay);
+//    	setOverlay(new SettingsOverlay());
     }
     private void setOverlay(Overlay overlay){
         removeOverlay();
         currentOverlay = overlay;
-        add(overlay, BorderLayout.CENTER);
-        setComponentZOrder(overlay, 0);
+        layeredPane.add(overlay, JLayeredPane.PALETTE_LAYER);
+        layoutComponents();
         revalidate();
         repaint();
     }
 
     public void removeOverlay(){
         if (currentOverlay!=null){
-            remove(currentOverlay);
+            layeredPane.remove(currentOverlay);
+            currentOverlay = null;
+            revalidate();
+            repaint();
+        }
+    }
+
+    private void layoutComponents() {
+        int width = layeredPane.getWidth();
+        int height = layeredPane.getHeight();
+
+        if (screen != null) {
+            screen.setBounds(0, 0, width, height);
+            screen.resize();
+        }
+
+        if (currentOverlay != null) {
+            Dimension size = currentOverlay.getPreferredSize();
+            currentOverlay.setBounds(
+                    (width - size.width) / 2,
+                    (height - size.height) / 2,
+                    size.width,
+                    size.height
+            );
         }
     }
 

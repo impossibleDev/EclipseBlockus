@@ -31,7 +31,7 @@ public class Piece extends JButton {
     }
     public void setTeam(Team team){
         this.team = team;
-        //color change code needed or not here idk?? - aiden
+        repaint();
     }
     
     //custom paint

@@ -8,6 +8,7 @@ import java.awt.event.MouseMotionListener;
 
 import model.Game;
 import shared.PieceData;
+import shared.PiecePlacer;
 import view.*;
 import view.gameUi.Piece;
 
@@ -19,7 +20,9 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
     private Game model = new Game();
     private GameScreen gameScreen;
     
+    private int previewPieceNum;
     private boolean[][] previewPiece;
+    
     public GameController(AppController appController, GameScreen gameScreen){
     	this.appController = appController;
         this.gameScreen = gameScreen;
@@ -35,8 +38,6 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
         gameScreen.getBoardPanel().addMouseMotionListener(this);
         gameScreen.getBoardPanel().addMouseListener(this);
         
-        //TEST CODE
-        previewPiece = PieceData.pieces[0]; //remove ts later
     }
 
     @Override
@@ -49,9 +50,19 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
     	}
     	else if (e.getSource() instanceof Piece) {
     		Piece piece = (Piece) e.getSource();
-    		previewPiece = piece.getData();
+    		
+    		//If selected, deselect
+    		if (gameScreen.getPiecePanel().getSelectedPiece() == piece) {
+    			gameScreen.getPiecePanel().deselectPiece();
+    			previewPiece = null;
+    			return;
+    		}
+    		
+    		//Select
+    		previewPieceNum = gameScreen.getPiecePanel().getPieceNum(piece);
+    		previewPiece = piece.getData().clone();
+    		
             gameScreen.selectPiece(piece);
-            // handle piece click, selected piece is this piece
         }
     }
 
@@ -66,10 +77,14 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
     	if (e.getSource()== gameScreen.getBoardPanel()) {
     		//add piece if is valid
     		
-    		//TODO piece validation
-    		if (true) {//add piecevalidation method here
+    		//TODO piece validation at PiecePlacer validMove()
+    		int x = gameScreen.getBoardPanel().getPreviewX();
+    		int y= gameScreen.getBoardPanel().getPreviewY();
+    		if ( previewPiece != null && PiecePlacer.validMove(model.getBoard(), x, y, previewPiece) ) {
     			//place piece code goes here
-    			model.playTurn(gameScreen.getBoardPanel().getPreviewX(), gameScreen.getBoardPanel().getPreviewY(), previewPiece);
+    			model.playTurn(x, y, previewPiece);
+    			gameScreen.getPiecePanel().deselectPiece();
+    			previewPiece = null;
     			gameScreen.update(model.getCurrentPlayer(), model.getPlayers(), model.getBoard());
     		}
     	}

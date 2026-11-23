@@ -13,8 +13,8 @@ import static view.ViewConstants.blockPadding;
 public class BoardPanel extends JPanel {
 
     private Team[][] board;
-    private int previewX, previewY; //new
-    private boolean[][] previewPieceData; //new
+    private int previewX, previewY;
+    private boolean[][] previewPieceData;
     public BoardPanel(){
         super();
         setSize(400,400);
