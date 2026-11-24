@@ -11,13 +11,19 @@ import static view.ViewConstants.blockSize;
 import static view.ViewConstants.blockPadding;
 
 public class BoardPanel extends JPanel {
-
+	
+	//IMAGE RESOURCES
+	private static final ImageIcon img = new ImageIcon("resources/ui/BoardPanelFrame.png");
+	
+	private JLabel borderFrameLabel = new JLabel(img);
     private Team[][] board;
     private int previewX, previewY;
     private boolean[][] previewPieceData;
     public BoardPanel(){
-        super();
-        setSize(400,400);
+        super(null);
+        borderFrameLabel.setBounds(0,0,500,500);
+        add(borderFrameLabel);
+        setOpaque(false);
     }
 
     public void updateBoard(Team[][] board){
@@ -26,8 +32,8 @@ public class BoardPanel extends JPanel {
     }
     
     public void previewPiece(int mouseX, int mouseY, boolean[][] pieceData) {
-    	previewX = mouseX/blockSize;
-    	previewY = mouseY/blockSize;
+    	previewX = (mouseX-50)/blockSize;
+    	previewY = (mouseY-50)/blockSize;
     	previewPieceData = pieceData;
         repaint();
     }
@@ -36,16 +42,18 @@ public class BoardPanel extends JPanel {
     public int getPreviewY() {return previewY; }
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    	g.setColor(Color.WHITE);
+    	g.fillRect(50,50,400,400);
+    	
         if (board == null) return;
         for (int x = 0; x< GameConstants.boardSize; x++){
             for (int y=0; y<GameConstants.boardSize; y++){
                 //draw tile
                 g.setColor(teamColors.get(board[x][y]));
                 if (board[x][y]== Team.NULL)
-                    g.fillRect(x*blockSize, y*blockSize, blockSize-blockPadding, blockSize-blockPadding);
+                    g.fillRect(50+ x*blockSize, 50+ y*blockSize, blockSize-blockPadding, blockSize-blockPadding);
                 else
-                    g.fillRoundRect(x*blockSize, y*blockSize, blockSize-blockPadding, blockSize-blockPadding, 2,2);
+                    g.fillRoundRect(50+ x*blockSize, 50+ y*blockSize, blockSize-blockPadding, blockSize-blockPadding, 2,2);
             }
         }
         if (previewPieceData == null) return;
@@ -59,10 +67,12 @@ public class BoardPanel extends JPanel {
                 int boardY = previewY + y;
                 if (boardX >= 0 && boardX < GameConstants.boardSize
                         && boardY >= 0 && boardY < GameConstants.boardSize) {
-                    g.fillRoundRect(boardX * blockSize, boardY * blockSize,
+                    g.fillRoundRect(50+ boardX * blockSize, 50+ boardY * blockSize,
                             blockSize - blockPadding, blockSize - blockPadding, 2, 2);
                 }
             }
         }
+        
+        //frame
     }
 }

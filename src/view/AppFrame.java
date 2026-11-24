@@ -28,7 +28,7 @@ public class AppFrame extends JFrame {
 
         layeredPane.setLayout(null);
         setContentPane(layeredPane);
-        setSize(1000, 600);
+        setSize(1200, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         layeredPane.addComponentListener(new ComponentAdapter() {
