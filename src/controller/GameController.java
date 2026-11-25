@@ -7,122 +7,142 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import model.Game;
-import shared.PieceData;
 import shared.PiecePlacer;
-import view.*;
+import view.GameScreen;
+import view.SoundService;
 import view.gameUi.Piece;
 
-
-//Aiden
+// Aiden & Melinda & Yanjun
 public class GameController implements ActionListener, MouseListener, MouseMotionListener {
-    //controls the GameScreen input and stuff
+
 	private AppController appController;
-    private Game model = new Game();
-    private GameScreen gameScreen;
-    
-    private int previewPieceNum;
-    private boolean[][] previewPiece;
-    
-    public GameController(AppController appController, GameScreen gameScreen){
-    	this.appController = appController;
-        this.gameScreen = gameScreen;
-        gameScreen.update(model.getCurrentPlayer(), model.getPlayers(), model.getBoard());
-        //Adding listeners
-        gameScreen.getSettingsButton().addActionListener(this);;
-        for (Piece piece : gameScreen.getPiecePanel().getPieces()){
+	private Game model = new Game();
+	private GameScreen gameScreen;
 
-            piece.addActionListener(this);
-            piece.addMouseListener(this);
-        };
-//        gamescreen.boardPanel.addMouseListener(this);
-        gameScreen.getBoardPanel().addMouseMotionListener(this);
-        gameScreen.getBoardPanel().addMouseListener(this);
-        
-    }
+	private int previewPieceNum;
+	private boolean[][] previewPiece;
+	private int lastMouseX, lastMouseY;
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-    	if (e.getSource() == gameScreen.getSettingsButton()) {
-    		//open up settings
-    		//BUT FOR NOW, OPEN UP HELP OVERLAY (change later when settings is done)
-    		appController.getView().setOverlayHelpPanel();
-    		
-    	}
-    	else if (e.getSource() instanceof Piece) {
-    		Piece piece = (Piece) e.getSource();
-    		
-    		//If selected, deselect
-    		if (gameScreen.getPiecePanel().getSelectedPiece() == piece) {
-    			gameScreen.getPiecePanel().deselectPiece();
-    			previewPiece = null;
-    			return;
-    		}
-    		
-    		//Select
-    		previewPieceNum = gameScreen.getPiecePanel().getPieceNum(piece);
-    		previewPiece = piece.getData().clone();
-    		
-            gameScreen.selectPiece(piece);
-        }
-    }
+	public GameController(AppController appController, GameScreen gameScreen) {
+		this.appController = appController;
+		this.gameScreen = gameScreen;
+		gameScreen.update(model.getCurrentPlayer(), model.getPlayers(), model.getBoard());
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        
-    }
+		// Adding listeners
+		gameScreen.getSettingsButton().addActionListener(this);
+		gameScreen.getHelpButton().addActionListener(this);
+		gameScreen.getBackButton().addActionListener(this);
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-    	//if mouse is inside boardpanel, add snapped pos to board, play ur turn!
-    	if (e.getSource()== gameScreen.getBoardPanel()) {
-    		//add piece if is valid
-    		
-    		//TODO piece validation at PiecePlacer validMove()
-    		int x = gameScreen.getBoardPanel().getPreviewX();
-    		int y= gameScreen.getBoardPanel().getPreviewY();
-    		if ( previewPiece != null && PiecePlacer.validMove(model.getBoard(), x, y, previewPiece) ) {
-    			//place piece code goes here
-    			model.playTurn(x, y, previewPiece);
-    			gameScreen.getPiecePanel().deselectPiece();
-    			previewPiece = null;
-    			gameScreen.update(model.getCurrentPlayer(), model.getPlayers(), model.getBoard());
-    		}
-    	}
-    }
+		for (Piece piece : gameScreen.getPiecePanel().getPieces()) {
+			piece.addActionListener(this);
+			piece.addMouseListener(this);
+		}
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        if (e.getSource() instanceof Piece) {
-            // handle piece hover animation
-        	gameScreen.hoverPiece((Piece)e.getSource());
-        }
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    	if (e.getSource() instanceof Piece) {
-    		// handle piece hover animation
-    		gameScreen.dehoverPiece();
-      }
-    }
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		gameScreen.getBoardPanel().addMouseMotionListener(this);
+		gameScreen.getBoardPanel().addMouseListener(this);
+		new Keybinds(gameScreen, this);
 	}
 
 	@Override
+	public void actionPerformed(ActionEvent e) {
+		// plays click sound effect for buttons, not a piece 
+		if (!(e.getSource() instanceof Piece)) {
+			SoundService.playSound("click");
+		}
+		if (e.getSource() == gameScreen.getSettingsButton()) {
+			AppController.showSettingsOverlay();
+
+		} else if (e.getSource() == gameScreen.getHelpButton()) {
+			AppController.showHelpOverlay();
+
+		} else if (e.getSource() == gameScreen.getBackButton()) {
+			AppController.showSaveOverlay();
+
+		} else if (e.getSource() instanceof Piece) {
+			Piece piece = (Piece) e.getSource();
+
+			// if already selected, deselect
+			if (gameScreen.getPiecePanel().getSelectedPiece() == piece) {
+				gameScreen.getPiecePanel().deselectPiece();
+				previewPiece = null;
+				return;
+			}
+
+			// select new piece
+			previewPieceNum = gameScreen.getPiecePanel().getPieceNum(piece);
+			previewPiece = PiecePlacer.transpose(piece.getData());
+			gameScreen.selectPiece(piece);
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// if mouse is inside board panel, attempt to place the selected piece
+		if (e.getSource() == gameScreen.getBoardPanel()) {
+			int x = gameScreen.getBoardPanel().getPreviewX();
+			int y = gameScreen.getBoardPanel().getPreviewY();
+
+			if (previewPiece != null && PiecePlacer.validMove(model.getBoard(), x, y, previewPiece,
+					model.getCurrentPlayer().getTeam())) {
+				model.playTurn(x, y, previewPiece);
+				SoundService.playSound("place");
+				previewPiece = null;                              
+				gameScreen.getPiecePanel().deselectPiece();
+				gameScreen.update(model.getCurrentPlayer(), model.getPlayers(), model.getBoard());
+			}
+		}
+	}
+	
+	public void rotatePreview() {
+		if (previewPiece != null) {
+			previewPiece = PiecePlacer.rotate(previewPiece);
+			refreshPreview();
+		}
+	}
+
+	public void flipPreview() {
+		if (previewPiece != null) {
+			previewPiece = PiecePlacer.flip(previewPiece);
+			refreshPreview();
+		}
+	}
+
+	// redraws the preview right away, using the last known mouse position on the board
+	private void refreshPreview() {
+		gameScreen.getBoardPanel().previewPiece(lastMouseX, lastMouseY, previewPiece);
+	}
+	
+
+	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		//if inside boardPanel and selected piece, preview it
-		
+		lastMouseX = e.getX();
+		lastMouseY = e.getY();
 		gameScreen.getBoardPanel().previewPiece(e.getX(), e.getY(), previewPiece);
-		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		if (e.getSource() instanceof Piece) {
+			gameScreen.hoverPiece((Piece) e.getSource());
+		}
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		if (e.getSource() instanceof Piece) {
+			gameScreen.dehoverPiece();
+		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
 	}
 }

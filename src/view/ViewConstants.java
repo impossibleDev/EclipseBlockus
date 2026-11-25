@@ -20,6 +20,8 @@ public class ViewConstants {
     
     //imageIcons
     public static final ImageIcon settingsImage = new ImageIcon("resources/ui/SettingsButton.png");
+    public static final ImageIcon helpImage = new ImageIcon("src/resources/ui/HelpButton.png");
+    public static final ImageIcon backImage = new ImageIcon("src/resources/ui/BackButton.png");
     
     //automatically runs
     static {

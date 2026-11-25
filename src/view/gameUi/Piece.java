@@ -27,7 +27,9 @@ public class Piece extends JButton {
     
     public void setData(boolean[][] data){
         this.data = data;
-        setSize(blockSize*data.length, blockSize*data[0].length);
+        Dimension size = new Dimension(blockSize*data.length, blockSize*data[0].length);
+        setPreferredSize(size);
+        setSize(size);
     }
     public void setTeam(Team team){
         this.team = team;

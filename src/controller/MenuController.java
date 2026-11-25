@@ -2,27 +2,43 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import model.Game;
 import view.MenuScreen;
+import view.SoundService;
 
+// melinda
 public class MenuController implements ActionListener {
+	private Game model;
+	private MenuScreen menuScreen;
 	private AppController appController;
-    private MenuScreen menuScreen;
 
-    public MenuController(AppController appController, MenuScreen menuScreen){
-    	this.appController = appController;
-        this.menuScreen = menuScreen;
-//        gameScreen.update(model.getBoard());
-        menuScreen.getPlayButton().addActionListener(this);
-    }
+	// constructor
+	public MenuController(MenuScreen menuScreen, AppController appController) {
+		this.menuScreen = menuScreen;
+		this.appController = appController;
+		this.model = new Game();
+
+		// connect controller to buttons
+		menuScreen.setButtonListener(this);
+		menuScreen.getSettingsButton().addActionListener(this);
+		System.out.print("menu opened");
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		if (e.getSource() == menuScreen.getPlayButton()) {
-			//Play button Pressed
-			appController.toGameScreen();
+		SoundService.playSound("click");
+		if (e.getSource() == menuScreen.getSettingsButton()) {
+			AppController.showSettingsOverlay();
+
+		} else {
+			String command = e.getActionCommand();
+			if (command.equals("PLAY")) {
+				AppController.showNewGameOverlay();
+			} else if (command.equals("HELP")) {
+				AppController.showHelpOverlay();
+			} else if (command.equals("QUIT")) {
+				AppController.exit();
+			}
 		}
-		
 	}
 }

@@ -29,17 +29,19 @@ public class Game {
             }
         }
         //test board blocks
-        board[2][4] = Team.RED;
-        board[6][6] = Team.YELLOW;
+        //board[2][4] = Team.RED;
+        //board[6][6] = Team.YELLOW;
     }
 
     public void startGame(){
 
     }
     public void playTurn(int posX, int posY, boolean[][]pieceData){
-    	if (!PiecePlacer.validMove(board, posX, posY, pieceData)) {
+    	
+    	if (!PiecePlacer.validMove(board, posX, posY, pieceData, currentPlayer.getTeam())) {
     		throw new IllegalArgumentException("Invalid Move");
     	}
+
         //place shape
     	for (int x=0; x<pieceData.length; x++) {
     		for (int y=0; y<pieceData[0].length; y++) {

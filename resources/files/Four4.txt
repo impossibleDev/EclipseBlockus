@@ -1,0 +1,29 @@
+Four4
+2
+  x
+xxx
+3
+x
+x
+xx
+2
+xxx
+x
+3
+xx
+ x
+ x
+2
+xxx
+  x
+3
+xx
+x
+x
+2
+x
+xxx
+3
+x
+x
+xx
