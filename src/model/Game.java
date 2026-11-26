@@ -1,18 +1,25 @@
 package model;
 
+import shared.CardTypes;
 import shared.GameConstants;
 import shared.PiecePlacer;
 import shared.Team;
 
+//Aiden
 public class Game {
-
+	
+	//FIELDS
+	private static final Team[] order = {Team.BLUE, Team.GREEN, Team.YELLOW, Team.RED};
+	
     private Player currentPlayer;
-    private int currentPlayerIndex = 0;
     private Player[] players = new Player[GameConstants.playerSize];
+    
     private Team[][] board;
-    private static final Team[] order = {Team.BLUE, Team.GREEN, Team.YELLOW, Team.RED};
+    
+    private int currentPlayerIndex = 0;
+    private boolean currentPlayerUsedCard;
 
-    //CONSTRUCTOR
+    //Constructor
     public Game(){
     	//INIT PLAYERS
     	for (int i=0; i<players.length; i++) {
@@ -25,12 +32,10 @@ public class Game {
         board = new Team[GameConstants.boardSize][GameConstants.boardSize];
         for (int x = 0; x < GameConstants.boardSize; x++){
             for (int y = 0; y < GameConstants.boardSize; y++){
-                board[x][y] = Team.NULL;
+                board[x][y] = Team.RED;
             }
         }
-        //test board blocks
-        //board[2][4] = Team.RED;
-        //board[6][6] = Team.YELLOW;
+        
     }
 
     public void startGame(){
@@ -56,6 +61,15 @@ public class Game {
     	else
     		currentPlayerIndex++;
     	currentPlayer = players[currentPlayerIndex];
+        currentPlayerUsedCard = false;
+    }
+
+    public void playCard(CardTypes cardType, int x, int y) {
+        if (currentPlayerUsedCard) {
+            throw new IllegalStateException("Current player has already used a card this turn.");
+        }
+        CardTypes.useCard(cardType, board, x, y);
+        currentPlayerUsedCard = true;
     }
 
     public boolean isGameOver(){

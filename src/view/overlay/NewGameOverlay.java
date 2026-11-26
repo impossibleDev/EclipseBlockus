@@ -1,119 +1,61 @@
 package view.overlay;
 
-import java.awt.*;
-import javax.swing.*;
 
-import view.GuiUtil;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
-// melinda
+//melinda
 public class NewGameOverlay extends Overlay {
 
-	// fields
-	private JLabel title;
-	private JPanel settingsPanel;
-	private JButton startButton;
-	private JButton closeButton;
+	//imageIcon Resources
+	private static final ImageIcon frameImg = new ImageIcon("resources/ui/NewGameOverlayFrame.png");
+	private static final ImageIcon playButtonImg = new ImageIcon("resources/ui/NewGameOverlayPlayButton.png");
+	private static final ImageIcon playButtonHoverImg = new ImageIcon("resources/ui/NewGameOverlayPlayButtonHover.png");
 
-	private JLabel[] settingLabels = { new JLabel("# CPUS"), new JLabel("# Flips"), new JLabel("Time Limit") };
+	//UI Elements
+	private final JComboBox<Integer> cpuSelector = new JComboBox<>(new Integer[] { 1, 2, 3 });
+	private final JComboBox<Integer> flipSelector = new JComboBox<>(new Integer[] { 10, 25, 50 });
+	private final JComboBox<Integer> timeLimitSelector = new JComboBox<>(new Integer[] { 10, 30, 60 });
+	private final JButton startButton = new JButton(playButtonImg);
 
-	private JComboBox<Integer>[] settingBox = new JComboBox[3];
-
-	// constructor
+	//Constructor
 	public NewGameOverlay() {
-		setSize(500, 450);
-		setPreferredSize(new Dimension(500, 450));
-		setLayout(new BorderLayout(15, 15));
-		setOpaque(true);
-		setBackground(Color.WHITE);
-		setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		super(frameImg);
+		
+		//positioning and adding elements
+		closeButton.setLocation(525, 75);
 
-		// title and close button
-		title = new JLabel("NEW GAME", SwingConstants.CENTER);
-		title.setFont(GuiUtil.PIXELFONTBIG);
+		cpuSelector.setBounds(310, 150, 70, 40);
+		add(cpuSelector);
 
-		closeButton = new JButton("X");
-		closeButton.setPreferredSize(new Dimension(40, 40));
-		styleButton(closeButton);
+		flipSelector.setBounds(310, 200, 70, 40);
+		add(flipSelector);
 
-		JPanel topPanel = new JPanel(new BorderLayout());
-		topPanel.setOpaque(false);
-		topPanel.add(title, BorderLayout.CENTER);
-		topPanel.add(closeButton, BorderLayout.EAST);
-		topPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+		timeLimitSelector.setBounds(350, 250, 70, 40);
+		add(timeLimitSelector);
 
-		add(topPanel, BorderLayout.NORTH);
-
-		// settings panel
-		settingsPanel = new JPanel(new GridLayout(3, 2, 10, 25));
-		settingsPanel.setOpaque(false);
-		settingsPanel.setBorder(BorderFactory.createEmptyBorder(50, 60, 50, 60));
-
-		// combo boxes
-		settingBox[0] = new JComboBox<>(new Integer[] { 1, 2, 3 });
-		settingBox[1] = new JComboBox<>(new Integer[] { 10, 25, 50 });
-		settingBox[2] = new JComboBox<>(new Integer[] { 10, 30, 60 });
-
-		for (int i = 0; i < settingBox.length; i++) {
-
-			settingLabels[i].setFont(GuiUtil.PIXELFONTSMALL);
-			settingLabels[i].setForeground(Color.BLACK);
-			settingLabels[i].setOpaque(false);
-
-			settingBox[i].setFont(GuiUtil.PIXELFONTSMALL);
-			settingBox[i].setPreferredSize(new Dimension(100, 35));
-			settingBox[i].setBackground(Color.WHITE);
-			settingBox[i].setForeground(Color.BLACK);
-
-			settingsPanel.add(settingLabels[i]);
-			settingsPanel.add(settingBox[i]);
-		}
-
-		add(settingsPanel, BorderLayout.CENTER);
-
-		// play button
-		startButton = new JButton("PLAY");
-		startButton.setFont(GuiUtil.PIXELFONTMEDIUM);
-		startButton.setPreferredSize(new Dimension(160, 45));
-		styleButton(startButton);
-
-		JPanel bottomPanel = new JPanel();
-		bottomPanel.setOpaque(false);
-		bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
-		bottomPanel.add(startButton);
-
-		add(bottomPanel, BorderLayout.SOUTH);
-
+		startButton.setRolloverIcon(playButtonHoverImg);
+		startButton.setRolloverEnabled(true);
+		startButton.setBounds(255, 300, 189, 90);
+		add(startButton);
 	}
 
-	private void styleButton(JButton button) {
-		button.setFont(GuiUtil.PIXELFONTSMALL);
-		button.setBackground(Color.WHITE);
-		button.setForeground(Color.BLACK);
-		button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		button.setFocusPainted(false);
-		button.setOpaque(true);
-
-	}
-
-	// getter and setter methods
+	//Getters for UI elements
 	public JButton getStartButton() {
 		return startButton;
 	}
 
-	public JButton getCloseButton() {
-		return closeButton;
-	}
 
 	public JComboBox<Integer> getCpuSelector() {
-		return settingBox[0];
+		return cpuSelector;
 	}
 
 	public JComboBox<Integer> getFlipSelector() {
-		return settingBox[1];
+		return flipSelector;
 	}
 
 	public JComboBox<Integer> getTimeLimitSelector() {
-		return settingBox[2];
+		return timeLimitSelector;
 	}
-
 }

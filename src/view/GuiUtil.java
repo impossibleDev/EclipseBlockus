@@ -9,11 +9,13 @@ import java.io.File;
 
 //font code copied form my g11 project
 public class GuiUtil {
-
+	
+	//Font constants
     public static final Font PIXELFONT = loadCustomFont("resources/fonts/PressStart2P-Regular.ttf");
     public static Font PIXELFONTBIG = PIXELFONT.deriveFont(30f);
     public static Font PIXELFONTMEDIUM = PIXELFONT.deriveFont(20f);
     public static Font PIXELFONTSMALL = PIXELFONT.deriveFont(10f);
+    
     public static Font loadCustomFont(String path) {
         try {
             // Create the font object from the file
@@ -51,7 +53,18 @@ public class GuiUtil {
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
         button.setOpaque(false);
-//        button.setMargin(new Insets(0, 0, 0, 0)); // Removes extra padding around the icon???
+        return button;
+    }
+    
+    //creates a button with hover image
+    public static JButton createButton(ImageIcon normalImg, ImageIcon hoverImg) {
+    	JButton button = new JButton(normalImg);
+    	button.setRolloverIcon(hoverImg);
+    	button.setRolloverEnabled(true);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+        button.setOpaque(false);
         return button;
     }
     

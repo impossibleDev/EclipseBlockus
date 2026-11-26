@@ -18,6 +18,7 @@ public class BoardPanel extends JPanel {
 	private JLabel borderFrameLabel = new JLabel(img);
     private Team[][] board;
     private int previewX, previewY;
+    private boolean previewPieceAltSkin = true;
     private boolean[][] previewPieceData;
     public BoardPanel(){
         super(null);
@@ -32,9 +33,17 @@ public class BoardPanel extends JPanel {
     }
     
     public void previewPiece(int mouseX, int mouseY, boolean[][] pieceData) {
+    	previewPieceAltSkin = false;
     	previewX = (mouseX-50)/blockSize;
     	previewY = (mouseY-50)/blockSize;
     	previewPieceData = pieceData;
+        repaint();
+    }
+    
+    public void previewPieceAlt(int mouseX, int mouseY) {
+    	previewPieceAltSkin = true;
+    	previewX = (mouseX-50)/blockSize;
+    	previewY = (mouseY-50)/blockSize;
         repaint();
     }
     
@@ -55,6 +64,17 @@ public class BoardPanel extends JPanel {
                 else
                     g.fillRoundRect(50+ x*blockSize, 50+ y*blockSize, blockSize-blockPadding, blockSize-blockPadding, 2,2);
             }
+        }
+        
+        //Alt version, used for when using cards
+        if (previewPieceAltSkin) {
+        	g.setColor(Color.BLACK);
+        	g.fillRect(50+ previewX * blockSize -3 + (int)(blockSize/2), 50, 6, 400);
+        	g.fillRect(50, 50+ previewY * blockSize -3 + (int)(blockSize/2), 400, 6);
+        	g.setColor(Color.CYAN);
+        	g.fillRect(50+ previewX * blockSize -1 + (int)(blockSize/2), 50, 2, 400);
+        	g.fillRect(50, 50+ previewY * blockSize -1 + (int)(blockSize/2), 400, 2);
+        	return;
         }
         if (previewPieceData == null) return;
 

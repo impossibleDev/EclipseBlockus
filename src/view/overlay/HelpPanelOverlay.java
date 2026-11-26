@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,31 +19,35 @@ import view.GuiUtil;
 //yanjun
 public class HelpPanelOverlay extends Overlay {
 
-    private final JButton closeButton = new JButton("X");
+	//imageIcon Resources
+	private static final ImageIcon frameImg = new ImageIcon("resources/ui/HelpPanelOverlayFrame.png");
+//    private final JButton closeButton = new JButton("X");
 
     public HelpPanelOverlay() {
+    	super(frameImg);
     	//Panel appearance
-        setLayout(new BorderLayout());
-        setOpaque(true);
-        setBackground(Color.WHITE);
-        setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-        setPreferredSize(new Dimension(700, 500));
+//        setLayout(new BorderLayout());
+//        setOpaque(true);
+//        setBackground(Color.WHITE);
+//        setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+//        setPreferredSize(new Dimension(700, 500));
         
         //Panel title
-        JLabel title = new JLabel("BLOKUS", SwingConstants.CENTER);
-        title.setFont(GuiUtil.PIXELFONTBIG); //using font
+//        JLabel title = new JLabel("BLOKUS", SwingConstants.CENTER);
+//        title.setFont(GuiUtil.PIXELFONTBIG); //using font
         
         //Close button
-        closeButton.setFont(GuiUtil.PIXELFONTMEDIUM); //using font
+//        closeButton.setFont(GuiUtil.PIXELFONTMEDIUM); //using font
+        closeButton.setLocation(580, 65);
         
         //Top bar holds the title (center) and close button (right)
-        JPanel top = new JPanel(new BorderLayout());
-        top.setOpaque(false);
-        //empty border adds space above and below so the title is not cramped
-        top.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10)); 
-        top.add(title, BorderLayout.CENTER);
-        top.add(closeButton, BorderLayout.EAST);
-        add(top, BorderLayout.NORTH);
+//        JPanel top = new JPanel(new BorderLayout());
+//        top.setOpaque(false);
+//        //empty border adds space above and below so the title is not cramped
+//        top.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10)); 
+//        top.add(title, BorderLayout.CENTER);
+//        top.add(closeButton, BorderLayout.EAST);
+//        add(top, BorderLayout.NORTH);
         
         //Content(JTextPane)
         JTextPane text = new JTextPane();
@@ -50,8 +55,10 @@ public class HelpPanelOverlay extends Overlay {
         text.setFont(GuiUtil.PIXELFONTSMALL); //using font
         text.setEditable(false);
         text.setForeground(new Color(74, 48, 32)); //dark brown text color
+        text.setOpaque(false);
         text.setBackground(Color.WHITE);
         text.setMargin(new java.awt.Insets(8, 8, 8, 8));
+        
         
         //increase the space between lines so the text is easier to read
         StyledDocument doc = text.getStyledDocument();
@@ -62,7 +69,8 @@ public class HelpPanelOverlay extends Overlay {
         
         //Scroll bar
         JScrollPane scroll = new JScrollPane(text);
-        add(scroll, BorderLayout.CENTER);
+        scroll.setBounds(100, 130, 500, 270);
+        add(scroll);
     }
 
     public JButton getCloseButton() {

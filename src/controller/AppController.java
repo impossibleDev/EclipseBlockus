@@ -2,7 +2,6 @@ package controller;
 
 import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
-
 import view.AppFrame;
 import view.SoundService;
 import view.overlay.HelpPanelOverlay;
@@ -46,7 +45,6 @@ public class AppController {
 	// displays help overlay
 	public static void showHelpOverlay() {
 		HelpPanelOverlay overlay = new HelpPanelOverlay();
-		overlay.setSize(700, 500);
 		
 		openOverlay(overlay);
 
@@ -60,7 +58,6 @@ public class AppController {
 	public static void showSettingsOverlay() {
 		if (settingsOverlay == null) {
 			settingsOverlay = new SettingsOverlay();
-			settingsOverlay.setSize(640, 440);
 
 			// music toggle
 			settingsOverlay.getMusicButton().addItemListener(e ->
@@ -78,7 +75,6 @@ public class AppController {
 	// Displays the save game overlay when back is clicked
 	public static void showSaveOverlay() {
 		SaveOverlay overlay = new SaveOverlay();
-		overlay.setSize(440, 210);
 		
 		openOverlay(overlay);
 

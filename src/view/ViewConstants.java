@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.EnumMap;
 
+//Aiden
 public class ViewConstants {
 	
 	
@@ -20,8 +21,10 @@ public class ViewConstants {
     
     //imageIcons
     public static final ImageIcon settingsImage = new ImageIcon("resources/ui/SettingsButton.png");
-    public static final ImageIcon helpImage = new ImageIcon("src/resources/ui/HelpButton.png");
-    public static final ImageIcon backImage = new ImageIcon("src/resources/ui/BackButton.png");
+    public static final ImageIcon helpImage = new ImageIcon("resources/ui/HelpButton.png");
+    public static final ImageIcon backImage = new ImageIcon("resources/ui/BackButton.png");
+    public static final ImageIcon CloseButtonImage = new ImageIcon("resources/ui/CloseButton.png");
+    public static final ImageIcon CloseButtonHoverImage = new ImageIcon("resources/ui/CloseButtonHover.png");
     
     //automatically runs
     static {
@@ -37,6 +40,7 @@ public class ViewConstants {
         cardImages.put(CardTypes.SKIP, new ImageIcon("resources/cards/skip.png"));
         cardImages.put(CardTypes.EXPLODE, new ImageIcon("resources/cards/explode.png"));
         cardImages.put(CardTypes.SPAWNBLOCK, new ImageIcon("resources/cards/spawnBlock.png"));
+        
     }
 
 }

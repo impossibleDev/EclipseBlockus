@@ -2,6 +2,7 @@ package view;
 
 import shared.Team;
 import view.gameUi.BoardPanel;
+import view.gameUi.DeckPanel;
 import view.gameUi.Piece;
 import view.gameUi.PiecesPanel;
 import view.gameUi.TeamPanel;
@@ -14,20 +15,23 @@ import model.Player;
 //Aiden
 public class GameScreen extends Screen {
 
-	// images
+	//imageIcon Resources
 	public static final ImageIcon bgImageIcon = new ImageIcon("resources/bg/gameBg.png");
+	private static final ImageIcon backButtonImg = new ImageIcon("resources/ui/BackButton.png");
+	private static final ImageIcon backButtonHoverImg = new ImageIcon("resources/ui/BackButtonHover.png");
 	public static final EnumMap<Team, ImageIcon> cornerImages = new EnumMap<>(Team.class);
 	static {
-		// corner images
+		//loads  corner images
 		cornerImages.put(Team.YELLOW, new ImageIcon("resources/bg/CornerYellow.png"));
 		cornerImages.put(Team.RED, new ImageIcon("resources/bg/CornerRed.png"));
 		cornerImages.put(Team.GREEN, new ImageIcon("resources/bg/CornerGreen.png"));
 		cornerImages.put(Team.BLUE, new ImageIcon("resources/bg/CornerBlue.png"));
 	}
 
-	// ui elements
+	//UI Elements
 	private BoardPanel boardPanel;
 	private TeamPanel teamPanel;
+	private DeckPanel deckPanel;
 	private PiecesPanel piecesPanel;
 	private JScrollPane piecesScrollPane;
 	private JButton settingsButton;
@@ -37,14 +41,15 @@ public class GameScreen extends Screen {
 	private JLabel bgLabel = new JLabel(bgImageIcon);
 	private EnumMap<Team, JLabel> cornerLabels = new EnumMap<>(Team.class);
 
-	// constructor
+	//Constructors
 	public GameScreen() {
 		super();
 		setLayout(null);
 
-		// add ui elements
+		// add UI elements
 		boardPanel = new BoardPanel();
 		teamPanel = new TeamPanel();
+		deckPanel = new DeckPanel();
 
 		piecesPanel = new PiecesPanel();
 		piecesScrollPane = new JScrollPane(piecesPanel);
@@ -55,10 +60,11 @@ public class GameScreen extends Screen {
 		piecesScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		settingsButton = GuiUtil.createButton(ViewConstants.settingsImage);
 		helpButton = GuiUtil.createButton(ViewConstants.helpImage);
-		backButton = GuiUtil.createButton(ViewConstants.backImage);
+		backButton = GuiUtil.createButton(backButtonImg, backButtonHoverImg);
 
 		add(backButton);
 		add(boardPanel);
+		add(deckPanel);
 		add(teamPanel);
 		// add(piecesPanel);
 		add(piecesScrollPane);
@@ -92,7 +98,8 @@ public class GameScreen extends Screen {
 	}
 
 	public void update(Player currentPlayer, Player[] players, Team[][] board) {
-		this.teamPanel.update(currentPlayer, players);
+		this.teamPanel.update(players);
+		this.deckPanel.update(currentPlayer);
 		this.piecesPanel.update(currentPlayer);
 		this.boardPanel.updateBoard(board);
 
@@ -105,10 +112,6 @@ public class GameScreen extends Screen {
 		}
 	}
 
-	public void setCurrentTeam() {
-
-	}
-
 	// getters for ui elements
 	public PiecesPanel getPiecePanel() {
 		return piecesPanel;
@@ -118,6 +121,14 @@ public class GameScreen extends Screen {
 		return boardPanel;
 	}
 
+	public TeamPanel getTeamPanel() {
+		return teamPanel;
+	}
+
+	public DeckPanel getDeckPanel() {
+		return deckPanel;
+	}
+	
 	public JButton getSettingsButton() {
 		return settingsButton;
 	}
@@ -138,13 +149,14 @@ public class GameScreen extends Screen {
 
 		boardPanel.setBounds((int) (w / 2 - 250), (int) (h / 2 - 250), 500, 500);
 		teamPanel.setBounds(50, 50, 250, 660);
+		deckPanel.setBounds(50, 490, 250, 220);
 		//piecesPanel.setBounds(w - 300, 50, 250, 660);
 		//piecesPanel.setSize(piecesPanel.getPreferredSize());
-		piecesScrollPane.setBounds(w - 300, 0, 250, 660);
+		piecesScrollPane.setBounds(w - 300, 60, 250, 660);
 
 		settingsButton.setBounds(w - 70, 10, 60, 60);
 		helpButton.setBounds(w - 140, 10, 60, 60);
-		backButton.setBounds(20, 20, 80, 40);
+		backButton.setBounds(20, 20, 60, 60);
 
 		cornerLabels.get(Team.BLUE).setBounds(0, 0, 600, 700);
 		cornerLabels.get(Team.GREEN).setBounds(w - 600, 0, 600, 700);
