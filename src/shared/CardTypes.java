@@ -1,16 +1,7 @@
-/*
- * File: CardTypes.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Not explicitly documented in source
- * Date: November 27, 2026
- * Description: Defines the available special card types.
- */
+// Description: Defines the card types as enum, and method to use card based off given enum
 
 package shared;
 
-import model.Card;
 import model.Player;
 
 public enum CardTypes {
@@ -18,22 +9,23 @@ public enum CardTypes {
 
 	// player is the one using the card (needed by cards that change the player,
 	// like REGENERATE)
+	//Aiden
 	public static void useCard(CardTypes cardType, Team[][] board, int x, int y, Player player) {
 		switch (cardType) {
 
-		case SKIP:
+		case SKIP: //Melinda
 			model.Card.useSkip(null);
 			break;
 
-		case EXPLODE:
+		case EXPLODE: //Aiden
 			model.Card.useExplosion(board, x, y);
 			break;
 
-		case REGENERATE:
+		case REGENERATE: //Yanjun
 			model.Card.useRegenerate(player);
 			break;
 
-		case DETACH:
+		case DETACH: //Melinda
 			player.setDetachActive(true);
 			break;
 

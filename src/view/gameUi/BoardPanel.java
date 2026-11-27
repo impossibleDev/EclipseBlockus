@@ -1,12 +1,5 @@
-/*
- * File: BoardPanel.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Aiden
- * Date: November 27, 2026
- * Description: Displays the game board and selected-piece previews.
- */
+// Description: Displays the game board with selected-piece previews.
+// Contributors: Aiden
 
 package view.gameUi;
 
@@ -23,15 +16,19 @@ import static view.ViewConstants.blockPadding;
 //Aiden
 public class BoardPanel extends JPanel {
 
-	// IMAGE RESOURCES
+	// ImageIcon resources
 	private static final ImageIcon img = new ImageIcon("resources/ui/BoardPanelFrame.png");
 
+	// UI elements
 	private JLabel borderFrameLabel = new JLabel(img);
+
+	// Fields
 	private Team[][] board;
 	private int previewX, previewY;
 	private boolean previewPieceAltSkin = true;
 	private boolean[][] previewPieceData;
 
+	//Constructor
 	public BoardPanel() {
 		super(null);
 		borderFrameLabel.setBounds(0, 0, 500, 500);
@@ -39,12 +36,13 @@ public class BoardPanel extends JPanel {
 		setOpaque(false);
 	}
 
-	//redraws an updated board
+	//redraws an updated board based of given data
 	public void updateBoard(Team[][] board) {
 		this.board = board;
 		repaint();
 	}
 
+	//preview piece at pos
 	public void previewPiece(int mouseX, int mouseY, boolean[][] pieceData) {
 		previewPieceAltSkin = false;
 		previewX = (mouseX - 50) / blockSize;
@@ -52,7 +50,7 @@ public class BoardPanel extends JPanel {
 		previewPieceData = pieceData;
 		repaint();
 	}
-
+	//preview crosshair at pos
 	public void previewPieceAlt(int mouseX, int mouseY) {
 		previewPieceAltSkin = true;
 		previewX = (mouseX - 50) / blockSize;
@@ -60,6 +58,7 @@ public class BoardPanel extends JPanel {
 		repaint();
 	}
 
+	// Getters
 	public int getPreviewX() {
 		return previewX;
 	}

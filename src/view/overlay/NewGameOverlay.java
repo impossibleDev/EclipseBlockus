@@ -1,12 +1,5 @@
-/*
- * File: NewGameOverlay.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Melinda
- * Date: November 27, 2026
- * Description: Collects settings for starting a new game.
- */
+// Description: Prompts game settings for starting a new game.
+// Contributors: Melinda, Aiden
 
 package view.overlay;
 
@@ -25,13 +18,13 @@ public class NewGameOverlay extends Overlay {
 	private static final ImageIcon playButtonImg = new ImageIcon("resources/ui/NewGameOverlayPlayButton.png");
 	private static final ImageIcon playButtonHoverImg = new ImageIcon("resources/ui/NewGameOverlayPlayButtonHover.png");
 
-	// UI elements (supports both integers and "Unlimited")
+	// UI elements
 	private final JComboBox<Object> cpuSelector = new JComboBox<>(new Object[] { 0, 1, 2, 3, 4 });
 	private final JComboBox<Object> flipSelector = new JComboBox<>(new Object[] { "Unlimited", 10, 25, 50 });
 	private final JComboBox<Object> timeLimitSelector = new JComboBox<>(new Object[] { "Unlimited", 10, 30, 60 });
 	private final JButton startButton = new JButton(playButtonImg);
 
-	// Constructor
+	// Constructor - Aiden
 	public NewGameOverlay() {
 		super(frameImg);
 

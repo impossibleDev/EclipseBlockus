@@ -1,12 +1,5 @@
-/*
- * File: Piece.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Aiden, Melinda
- * Date: November 27, 2026
- * Description: Renders one polyomino piece and its selected appearance.
- */
+// Description: Renders a single piece as JButton.
+// Contributors: Aiden
 
 package view.gameUi;
 
@@ -21,6 +14,7 @@ import static view.ViewConstants.blockPadding;
 
 //Aiden
 public class Piece extends JButton {
+	// Fields
 	private Team team;
 	private boolean[][] data;
 	private boolean altSkin = false;
@@ -31,7 +25,7 @@ public class Piece extends JButton {
 		
 	}
 
-	//getters & setters for data
+	// Getters / setters
 	public boolean[][] getData() {
 		return data;
 	}
@@ -42,7 +36,14 @@ public class Piece extends JButton {
 		setSize(dimension);
 		setPreferredSize(dimension);
 	}
+	
+	public void setTeam(Team team) {
+		this.team = team;
+		repaint();
+	}
 
+	
+	//set size to width & height to piece data
 	@Override
 	public Dimension getPreferredSize() {
 		if (data == null)
@@ -52,11 +53,6 @@ public class Piece extends JButton {
 		return new Dimension(w, h);
 	}
 
-
-	public void setTeam(Team team) {
-		this.team = team;
-		repaint();
-	}
 
 	// custom paint
 	@Override

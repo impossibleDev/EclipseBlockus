@@ -1,12 +1,5 @@
-/*
- * File: ComputerPlayer.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Yanjun
- * Date: November 27, 2026
- * Description: Determines and performs automated player moves.
- */
+// Description: Determines and performs automated player moves.
+// Contributors: Yanjun
 
 package model;
 
@@ -16,27 +9,27 @@ import shared.PiecePlacer;
 import shared.Team;
 
 // yanjun
-
 public class ComputerPlayer {
+
+	// Constants
+	// random to make sure the computer players don't place in a similar way every
+	private static final Random rand = new Random();
 
 	// one possible move
 	// We keep the best one found so far and replace it
 	// whenever we find a move with a higher score
 	public static class Move {
+		// Fields
 		// x, y (board position of the piece)
 		// pieceNum (which of the 21 pieces this is)
 		// size (how many squares in that piece)
-		// score (how good the move is)
-		// data (the piece's shape in the orientation that was chosen)
+		// score (how good the move is), data (the piece's shape, including orientation)
 		public int x, y, pieceNum, size, score;
 		public boolean[][] data;
 	}
 
-	// random to make sure the computer players don't place in a similar way every
-	// time
-	private static final Random rand = new Random();
 
-	// returns the best move found or null if the player has no legal move
+	// returns the best move found, or null if the player has no legal move
 	public static Move chooseMove(Team[][] board, Player player) {
 		// start from piece 0 with no best move yet (null)
 		return searchPieces(board, player, 0, null);

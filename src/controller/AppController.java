@@ -1,12 +1,5 @@
-/*
- * File: AppController.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Melinda, Yanjun
- * Date: November 27, 2026
- * Description: Coordinates application screens and major game actions.
- */
+// Description: Coordinates other controllers & application screens.
+// Contributors: Melinda, Yanjun
 
 package controller;
 
@@ -26,6 +19,7 @@ import view.overlay.SettingsOverlay;
 
 public class AppController {
 
+	// Fields
 	private static AppFrame view = new AppFrame();
 	private static GameController gameController;
 	private static SettingsOverlay settingsOverlay;
@@ -33,9 +27,6 @@ public class AppController {
 	private static GameState savedGameState = new GameState(); // melinda
 
 	public AppController() {
-		SoundService.loadSound("bgm", "resources/audio/BackgroundMusic.wav");
-		SoundService.loadSound("click", "resources/audio/Click.wav");
-		SoundService.loadSound("place", "resources/audio/PlacePiece.wav");
 
 		// start background music
 		SoundService.playMusic("bgm");
@@ -46,7 +37,7 @@ public class AppController {
 
 	private void newGame() {
 		gameController = new GameController(this, view.getGameScreen());
-		new MenuController(view.getMenuScreen(), this);
+		new MenuController(view.getMenuScreen());
 	}
 
 	// melinda & yanjun
@@ -139,10 +130,18 @@ public class AppController {
 
 			// music toggle
 			settingsOverlay.getMusicButton()
-					.addItemListener(e -> SoundService.setMusicOn(settingsOverlay.getMusicButton().isSelected()));
+					.addItemListener(e -> {
+						boolean isOn = settingsOverlay.getMusicButton().isSelected();
+						SoundService.setMusicOn(isOn);
+						settingsOverlay.getMusicButton().setText(isOn ? "ON" : "OFF");
+					});
 			// sfx toggle
 			settingsOverlay.getSfxButton()
-					.addItemListener(e -> SoundService.setSfxOn(settingsOverlay.getSfxButton().isSelected()));
+			.addItemListener(e -> {
+				boolean isOn = settingsOverlay.getSfxButton().isSelected();
+				SoundService.setSfxOn(isOn);
+				settingsOverlay.getSfxButton().setText(isOn ? "ON" : "OFF");
+			});
 			// close overlay
 			settingsOverlay.getCloseButton().addActionListener(e -> closeOverlay(settingsOverlay));
 		}
@@ -266,6 +265,7 @@ public class AppController {
 		System.exit(0);
 	}
 
+	// Getters
 	public static AppFrame getView() {
 		return view;
 	}

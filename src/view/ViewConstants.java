@@ -1,12 +1,5 @@
-/*
- * File: ViewConstants.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Aiden
- * Date: November 27, 2026
- * Description: Stores shared UI colours, dimensions, fonts, and images.
- */
+// Description: Stores shared UI colours, fonts, and images.
+// Contributors: Aiden
 
 package view;
 
@@ -20,15 +13,15 @@ import java.util.EnumMap;
 //Aiden
 public class ViewConstants {
 
-	// enumMaps
+	// Fields
 	public static final EnumMap<Team, Color> teamColors = new EnumMap<>(Team.class);
 	public static final EnumMap<CardTypes, ImageIcon> cardImages = new EnumMap<>(CardTypes.class);
 
-	// numbers
-	public static final int blockSize = 20; // or mabye blockSize is dynmaic to JPanle size?
+	// Constants
+	public static final int blockSize = 20;
 	public static final int blockPadding = 2;
 
-	// imageIcons
+	// ImageIcon resources
 	public static final ImageIcon settingsImage = new ImageIcon("resources/ui/SettingsButton.png");
 	public static final ImageIcon helpImage = new ImageIcon("resources/ui/HelpButton.png");
 	public static final ImageIcon backImage = new ImageIcon("resources/ui/BackButton.png");

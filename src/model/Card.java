@@ -1,12 +1,5 @@
-/*
- * File: Card.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Melinda, Yanjun, Aiden
- * Date: November 27, 2026
- * Description: Implements special card abilities used during gameplay.
- */
+// Description: Implements special card abilities used during gameplay.
+// Contributors: Aiden, Melinda, Yanjun
 
 package model;
 
@@ -15,23 +8,22 @@ import shared.Team;
 
 public class Card {
 
-	// SKIP ABILITY - Allows the current player to take an extra turn (Melinda)
+	// Constants
+	private static final int explosionRadius = 2;
+
+	// SKIP ABILITY - Allows the current player to take an extra turn - Melinda
 	public static void useSkip(Game game) {
 		for (int i = 0; i < GameConstants.playerSize - 1; i++) {
 			game.passTurn();
 		}
 	}
 
-	// REGENERATE ABILITY - gives the player an extra 1x1 block right away
-	// yanjun
+	// REGENERATE ABILITY - gives the player an extra 1x1 block right away - Yanjun
 	public static void useRegenerate(Player player) {
 		player.addBonusOneByOne();
 	}
 
-	// EXPLOSION ABILITY - Aiden
-	// blast radius in a "circle" radius, random generation
-	private final static int explosionRadius = 2;
-
+	// EXPLOSION ABILITY - blast radius in a "circle" radius, random generation - Aiden
 	public static void useExplosion(Team[][] board, int x, int y) {
 		int startX = Math.max(x - explosionRadius, 0);
 		int endX = Math.min(x + explosionRadius, GameConstants.boardSize - 1);
@@ -48,9 +40,10 @@ public class Card {
 		}
 	}
 
-	// DETACH ABILITY - Allows bypassing corner-to-corner rules for one turn (Melinda)
-		public static void useDetach(Player player) {
-			player.setDetachActive(true);
-		}
+	// DETACH ABILITY - Allows bypassing corner-to-corner rules for one turn -
+	// Melinda
+	public static void useDetach(Player player) {
+		player.setDetachActive(true);
+	}
 
 }

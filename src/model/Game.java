@@ -1,12 +1,5 @@
-/*
- * File: Game.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Melinda, Yanjun
- * Date: November 27, 2026
- * Description: Contains the core game rules, board state, and turn logic.
- */
+// Description: Game model, holds data such as board data, game rules, and turn logic.
+// Contributors: Melinda
 
 package model;
 
@@ -17,15 +10,17 @@ import shared.Team;
 
 public class Game {
 
+	// Constants
+	private static final Team[] order = { Team.BLUE, Team.GREEN, Team.YELLOW, Team.RED };
+	private static final boolean[][] bonusOneByOnePiece = { { true } };
+
+	// Fields
 	private Player currentPlayer;
 	private int currentPlayerIndex = 0;
 	private int maxFlipsAllowed;
-	private int turnTimeLimit;
 	private int cpuCount;
 	private Player[] players = new Player[GameConstants.playerSize];
 	private Team[][] board;
-	private static final Team[] order = { Team.BLUE, Team.GREEN, Team.YELLOW, Team.RED };
-	private static final boolean[][] bonusOneByOnePiece = { { true } };
 	private boolean extraTurn = false;
 
 	// CONSTRUCTOR
@@ -222,7 +217,6 @@ public class Game {
 	// melinda
 	public void initializeNewGame(int cpuCount, int maxFlips, int timeLimit) {
 		this.maxFlipsAllowed = maxFlips;
-		this.turnTimeLimit = timeLimit;
 		this.cpuCount = cpuCount;
 
 		int validCpuCount = Math.max(0, Math.min(order.length, cpuCount));
@@ -273,7 +267,6 @@ public class Game {
 
 		this.cpuCount = cpuCount;
 		this.maxFlipsAllowed = maxFlips;
-		this.turnTimeLimit = timeLimit;
 		this.currentPlayerIndex = savedPlayerIndex;
 		this.currentPlayer = this.players[currentPlayerIndex];
 	}

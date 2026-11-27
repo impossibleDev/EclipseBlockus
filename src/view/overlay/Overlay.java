@@ -1,12 +1,5 @@
-/*
- * File: Overlay.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Aiden
- * Date: November 27, 2026
- * Description: Provides shared structure and behavior for modal overlays.
- */
+// Description: Provides shared behavior for view overlays.
+// Contributors: Aiden
 
 package view.overlay;
 
@@ -20,7 +13,7 @@ import view.ViewConstants;
 //Aiden
 public abstract class Overlay extends JLabel {
 
-	// UI Elements
+	// UI elements
 	protected JButton closeButton = GuiUtil.createButton(ViewConstants.CloseButtonImage,
 			ViewConstants.CloseButtonHoverImage);
 

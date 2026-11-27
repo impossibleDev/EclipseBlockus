@@ -1,12 +1,5 @@
-/*
- * File: PiecesPanel.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Aiden, Yanjun
- * Date: November 27, 2026
- * Description: Displays available pieces and manages piece selection.
- */
+// Description: PiecePanel displays available pieces and manages piece selection.
+// Contributors: Aiden, Yanjun
 
 package view.gameUi;
 
@@ -20,7 +13,10 @@ import shared.Team;
 //Aiden
 public class PiecesPanel extends JLabel {
 
+	// ImageIcon resources
 	private static final ImageIcon img = new ImageIcon("resources/ui/PiecePanelFrame.png");
+
+	// UI elements
 	private Piece[] pieces;
 	private Piece hoveredPiece;
 	private Piece selectedPiece;
@@ -64,6 +60,7 @@ public class PiecesPanel extends JLabel {
 		
 	}
 	
+	// Getters
 	public Piece getBonusOneByOnePiece() {
 		return bonusOneByOnePiece;
 	}
@@ -88,6 +85,7 @@ public class PiecesPanel extends JLabel {
 		return selectedPiece;
 	}
 
+	//Hover and Selection animation logic
 	public void hoverPiece(Piece piece) {
 		if (piece == null) {
 			return;

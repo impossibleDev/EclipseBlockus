@@ -1,12 +1,5 @@
-/*
- * File: HelpPanelOverlay.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Yanjun, Aiden
- * Date: November 27, 2026
- * Description: Displays gameplay instructions and help information.
- */
+// Description: Displays gameplay instructions and help information.
+// Contributors: Aiden, Yanjun
 
 package view.overlay;
 
@@ -23,10 +16,10 @@ import view.GuiUtil;
 //yanjun
 public class HelpPanelOverlay extends Overlay {
 
-	// imageIcon Resources
+	// ImageIcon resources
 	private static final ImageIcon frameImg = new ImageIcon("resources/ui/HelpPanelOverlayFrame.png");
 	
-	//Constructor - Aiden
+	//Constructor - Aiden, yanjun
 	public HelpPanelOverlay() {
 		super(frameImg);
 		
@@ -54,7 +47,7 @@ public class HelpPanelOverlay extends Overlay {
 		add(scroll);
 	}
 
-	// Instruction on the Help Panel
+	// Instruction on the Help Panel - yanjun
 	private String loadHelpText() {
 		return """
 				How to Play

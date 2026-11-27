@@ -1,12 +1,5 @@
-/*
- * File: MenuScreen.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Melinda, Aiden, Yanjun
- * Date: November 27, 2026
- * Description: Displays the main menu and its navigation buttons.
- */
+// Description: Displays the main menu and its navigation buttons.
+// Contributors: Aiden, Melinda, Yanjun
 
 package view;
 
@@ -17,7 +10,7 @@ import javax.swing.*;
 // melinda
 public class MenuScreen extends Screen {
 	
-	// fields - aiden
+	// ImageIcon resources
 	public static final ImageIcon titleImg = new ImageIcon("resources/ui/BlokusTitle.gif");
 	public static final ImageIcon bgImageIcon = new ImageIcon("resources/bg/gameBg.png");
 	public static final ImageIcon playButtonImg = new ImageIcon("resources/ui/MenuPlayButton.png");
@@ -27,6 +20,7 @@ public class MenuScreen extends Screen {
 	public static final ImageIcon quitButtonImg = new ImageIcon("resources/ui/MenuQuitButton.png");
 	public static final ImageIcon quitButtonHoverImg = new ImageIcon("resources/ui/MenuQuitButtonHover.png");
 	
+	// UI elements
 	private JLabel bgLabel = new JLabel(bgImageIcon);
 	private JLabel title = new JLabel(titleImg);
 	private JPanel buttonPanel;
@@ -100,7 +94,7 @@ public class MenuScreen extends Screen {
 		repaint();
 	}
 
-	// get ui elements
+	// Getters
 	public JButton getPlayButton() {
 		return buttons[0];
 	}

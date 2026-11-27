@@ -1,12 +1,5 @@
-/*
- * File: PieceData.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Melinda
- * Date: November 27, 2026
- * Description: Loads and stores the available polyomino piece shapes.
- */
+// Description: Staticlly loads and stores the available piece shapes.
+// Contributors: Melinda
 
 package shared;
 
@@ -16,9 +9,12 @@ import java.util.Scanner;
 
 // Melinda
 public class PieceData {
-    // Database of all pieces, defined as boolean[][]
+    // Constants and data
+    // Each piece is stored as a two-dimensional boolean grid.
     public final static boolean[][][] pieces;
 
+    // Static initialization
+    // Load every piece file and add valid shapes to the piece database.
     static {
         String[] fileNames = {
             "One1.txt", "Two1.txt", "Three1.txt", "Three2.txt",
@@ -41,13 +37,17 @@ public class PieceData {
         pieces = list.toArray(new boolean[0][][]);
     }
 
+    // Loads the first orientation of one piece from a text file.
     private static boolean[][] loadPiece(String fileName) {
         File file = new File("resources/files/" + fileName);
         if (!file.exists()) {
             file = new File("src/resources/files/" + fileName);
         }
-        if (!file.exists()) return null;
+        if (!file.exists()) {
+            return null;
+        }
 
+        // Parsing variables
         ArrayList<String> lines = new ArrayList<>();
         int maxLen = 0;
         boolean capturingFirstOrientation = false;
@@ -80,8 +80,11 @@ public class PieceData {
             return null;
         }
 
-        if (lines.isEmpty()) return null;
+        if (lines.isEmpty()) {
+            return null;
+        }
 
+        // Convert the text characters into a boolean piece grid.
         boolean[][] grid = new boolean[lines.size()][maxLen];
         for (int r = 0; r < lines.size(); r++) {
             String l = lines.get(r);

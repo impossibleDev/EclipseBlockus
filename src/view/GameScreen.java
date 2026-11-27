@@ -1,12 +1,5 @@
-/*
- * File: GameScreen.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Aiden, Melinda
- * Date: November 27, 2026
- * Description: Builds and updates the main in-game interface.
- */
+// Description: Displays the game screen and updates it's elements
+// Contributors: Aiden, Melinda
 
 package view;
 
@@ -16,9 +9,7 @@ import view.gameUi.DeckPanel;
 import view.gameUi.Piece;
 import view.gameUi.PiecesPanel;
 import view.gameUi.TeamPanel;
-import view.gameUi.TimerIcon;
 
-import java.awt.Color;
 import java.util.EnumMap;
 import javax.swing.*;
 
@@ -27,7 +18,7 @@ import model.Player;
 //Aiden
 public class GameScreen extends Screen {
 
-	// imageIcon Resources
+	// ImageIcon resources
 	private static final ImageIcon bgImageIcon = new ImageIcon("resources/bg/gameBg.png");
 	private static final ImageIcon backButtonImg = new ImageIcon("resources/ui/BackButton.png");
 	private static final ImageIcon backButtonHoverImg = new ImageIcon("resources/ui/BackButtonHover.png");
@@ -40,7 +31,7 @@ public class GameScreen extends Screen {
 		cornerImages.put(Team.BLUE, new ImageIcon("resources/bg/CornerBlue.png"));
 	}
 
-	// UI Elements
+	// UI elements
 	private BoardPanel boardPanel;
 	private TeamPanel teamPanel;
 	private DeckPanel deckPanel;
@@ -63,6 +54,7 @@ public class GameScreen extends Screen {
 		teamPanel = new TeamPanel();
 		deckPanel = new DeckPanel();
 
+		//Piece Panel and it's ScrollPane
 		piecesPanel = new PiecesPanel();
 		piecesScrollPane = new JScrollPane(piecesPanel);
 		piecesScrollPane.setOpaque(false);
@@ -70,6 +62,8 @@ public class GameScreen extends Screen {
 		piecesScrollPane.setBorder(null);
 		piecesScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		piecesScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		//Buttons
 		settingsButton = GuiUtil.createButton(ViewConstants.settingsImage);
 		helpButton = GuiUtil.createButton(ViewConstants.helpImage);
 		backButton = GuiUtil.createButton(backButtonImg, backButtonHoverImg);
@@ -108,6 +102,7 @@ public class GameScreen extends Screen {
 		boardPanel.setVisible(true);
 	}
 
+	//updates game ui elements corresponding to given data
 	public void update(Player currentPlayer, Player[] players, Team[][] board) {
 		this.teamPanel.update(players);
 		this.deckPanel.update(currentPlayer);
@@ -129,6 +124,7 @@ public class GameScreen extends Screen {
 		
 	}
 
+	//positions and sizes UI elements
 	@Override
 	public void resize() {
 		super.resize();
@@ -153,7 +149,7 @@ public class GameScreen extends Screen {
 	}
 
 	
-	// getters for ui elements
+	//Getters for UI elements
 	public PiecesPanel getPiecePanel() {
 		return piecesPanel;
 	}
@@ -183,7 +179,7 @@ public class GameScreen extends Screen {
 	}
 	
 	
-	//WRAPPERS
+	//Wrappers
 	
 	public void hoverPiece(Piece piece) {
 		piecesPanel.hoverPiece(piece);
@@ -195,5 +191,9 @@ public class GameScreen extends Screen {
 
 	public void selectPiece(Piece piece) {
 		piecesPanel.selectPiece(piece);
+	}
+	
+	public void setTimerIconVisible(boolean visible) {
+	    deckPanel.setTimerIcon(visible);
 	}
 }

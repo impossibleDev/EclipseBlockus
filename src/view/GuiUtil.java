@@ -1,12 +1,5 @@
-/*
- * File: GuiUtil.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Aiden
- * Date: November 27, 2026
- * Description: Provides reusable GUI helpers, fonts, and button styles.
- */
+// Description: Provides reusable GUI helpers, fonts, and button styles.
+// Contributors: Aiden
 
 package view;
 
@@ -15,8 +8,6 @@ import java.awt.*;
 import java.io.File;
 
 //Aiden
-
-//font code copied form my g11 project
 public class GuiUtil {
 
 	// Font constants
@@ -25,6 +16,7 @@ public class GuiUtil {
 	public static Font PIXELFONTMEDIUM = PIXELFONT.deriveFont(20f);
 	public static Font PIXELFONTSMALL = PIXELFONT.deriveFont(10f);
 
+	//method for loading fonts
 	public static Font loadCustomFont(String path) {
 		try {
 			// Create the font object from the file
@@ -42,20 +34,7 @@ public class GuiUtil {
 			return new Font("Arial", Font.BOLD, (int) 10);
 		}
 	}
-
-	public static JButton createButton(String text) { // mainly for menu screen
-		JButton button = new JButton(text);
-		button.setFont(PIXELFONTMEDIUM);
-		button.setAlignmentX(Component.CENTER_ALIGNMENT);
-		button.setMaximumSize(new Dimension(200, 55));
-		button.setOpaque(true);
-		button.setFocusable(false);
-		button.setBackground(Color.WHITE);
-		button.setForeground(Color.BLACK);
-		button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-		return button;
-	}
-
+	// creates a button with hover image
 	public static JButton createButton(ImageIcon img) { // creates button from imageIcon
 		JButton button = new JButton(img);
 		button.setBorderPainted(false);
@@ -67,13 +46,9 @@ public class GuiUtil {
 
 	// creates a button with hover image
 	public static JButton createButton(ImageIcon normalImg, ImageIcon hoverImg) {
-		JButton button = new JButton(normalImg);
+		JButton button = createButton(normalImg);
 		button.setRolloverIcon(hoverImg);
 		button.setRolloverEnabled(true);
-		button.setBorderPainted(false);
-		button.setContentAreaFilled(false);
-		button.setFocusPainted(false);
-		button.setOpaque(false);
 		return button;
 	}
 

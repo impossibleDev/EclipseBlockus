@@ -1,12 +1,5 @@
-/*
- * File: Keybinds.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Yanjun
- * Date: November 27, 2026
- * Description: Creates keyboard shortcuts for gameplay actions.
- */
+// Description: Creates keyboard shortcuts for gameplay actions.
+// Contributors: Yanjun
 
 package controller;
 

@@ -1,12 +1,5 @@
-/*
- * File: LeaderboardOverlay.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Melinda, Aiden
- * Date: November 27, 2026
- * Description: Displays sorted player scores and ranks at the end of a game.
- */
+// Description: Displays the leaderboard, with sorted player scores at the end of a game.
+// Contributors: Aiden, Melinda
 
 package view.overlay;
 
@@ -19,19 +12,19 @@ import view.GuiUtil;
 //Melinda
 public class LeaderboardOverlay extends Overlay {
 	
-	//Constants - Visual positions from left to right: [2nd Place, 1st Place, 3rd Place, 4th Place]
+	// Constants: visual positions from left to right [2nd, 1st, 3rd, 4th]
 	private static final int[] labelX = {85, 205, 320, 400};
 	private static final int teamLabelY = 357;
 	private static final int scoreLabelY = 382;
 	
-	//imageIcon resources
+	// ImageIcon resources
 	private static final ImageIcon frameImg = new ImageIcon("resources/ui/LeaderboardOverlayFrame.png");
 	private static final ImageIcon newGameButtonImg = new ImageIcon("resources/ui/LeaderboardOverlayNewGameButton.png");
 	private static final ImageIcon newGameButtonHoverImg = new ImageIcon("resources/ui/LeaderboardOverlayNewGameButtonHover.png");
 	private static final ImageIcon quitButtonImg = new ImageIcon("resources/ui/LeaderboardOverlayQuitButton.png");
 	private static final ImageIcon quitButtonHoverImg = new ImageIcon("resources/ui/LeaderboardOverlayQuitButtonHover.png");
 	
-	//UI elements
+	// UI elements
 	private JButton newGameButton = GuiUtil.createButton(newGameButtonImg, newGameButtonHoverImg);
 	private JButton quitButton = GuiUtil.createButton(quitButtonImg, quitButtonHoverImg);
 	
@@ -93,6 +86,7 @@ public class LeaderboardOverlay extends Overlay {
 		}
 	}
 
+	// Getters for UI elements
 	public JButton getNewGameButton() {
 		return newGameButton;
 	}

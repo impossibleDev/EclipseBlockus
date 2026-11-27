@@ -1,12 +1,5 @@
-/*
- * File: DeckPanel.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Melinda
- * Date: November 27, 2026
- * Description: Displays the active player deck, flip count, and turn timer.
- */
+// Description: Displays the active player deck, flip count, and turn timer.
+// Contributors: Melinda
 
 package view.gameUi;
 
@@ -132,8 +125,10 @@ public class DeckPanel extends JLabel {
 	}
 
 	public void updateFlipCounter(int remainingFlips) {
+		
+		
 		if (remainingFlips < 0) {
-			flipCounterLabel.setText("Flips: Unlimited");
+			flipCounterLabel.setText("Flips: INF");
 		} else {
 			flipCounterLabel.setText("Flips: " + remainingFlips);
 		}
@@ -144,4 +139,9 @@ public class DeckPanel extends JLabel {
 			timerIcon.update(secElapsed, secLimit);
 		}
 	}
+	
+	public void setTimerIcon(boolean isVisible) {
+		timerIcon.setVisible(isVisible);
+	}
+	
 }

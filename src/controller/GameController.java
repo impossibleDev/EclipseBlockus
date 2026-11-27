@@ -1,12 +1,5 @@
-/*
- * File: GameController.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Aiden, Melinda, Yanjun
- * Date: November 27, 2026
- * Description: Handles game input and connects the game model to its interface.
- */
+// Description: Owns gameScreen, handles game input and connects to the game model.
+// Contributors: Aiden, Melinda, Yanjun
 
 package controller;
 
@@ -35,14 +28,14 @@ import view.gameUi.Piece;
 // Aiden & Melinda & Yanjun
 public class GameController implements ActionListener, MouseListener, MouseMotionListener {
 
-	// CONSTANTS
+	// Constants
 	private static final String ACTION_SETTINGS = "settings";
 	private static final String ACTION_HELP = "help";
 	private static final String ACTION_BACK = "back";
 	private static final String ACTION_PIECE = "piece";
 	private static final String ACTION_CARD_PREFIX = "card:";
 
-	// FIELDS
+	// Fields
 	private AppController appController;
 	private Game model = new Game();
 	private GameScreen gameScreen;
@@ -204,7 +197,21 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 		previewCardType = card;
 		gameScreen.getDeckPanel().selectCard(cardButton); // Ensure selection highlight is set
 	}
+	
+	// Aiden
+	private void clearSelection() {
+		previewPiece = null;
+		previewCardType = null;
+		previewCardIndex = -1;
+		gameScreen.getPiecePanel().deselectPiece();
+		gameScreen.getDeckPanel().deselectCard();
+	}
 
+	// Aiden
+	private void refreshGameScreen() {
+		gameScreen.update(model.getCurrentPlayer(), model.getPlayers(), model.getBoard());
+	}
+		
 	public void handleCardUsage(CardTypes card, int cardIndex, int x, int y) {
 		// Play the card ability through the model
 		model.playCard(card, x, y);
@@ -263,20 +270,6 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 				advanceTurnFlow();
 			}
 		}
-	}
-
-	// Aiden
-	private void clearSelection() {
-		previewPiece = null;
-		previewCardType = null;
-		previewCardIndex = -1;
-		gameScreen.getPiecePanel().deselectPiece();
-		gameScreen.getDeckPanel().deselectCard();
-	}
-
-	// Aiden
-	private void refreshGameScreen() {
-		gameScreen.update(model.getCurrentPlayer(), model.getPlayers(), model.getBoard());
 	}
 
 	// melinda
@@ -474,11 +467,13 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 		}
 
 		if (timeLimit < 0) {
+			gameScreen.setTimerIconVisible(false);
 			return;
 		}
 
 		secElapsed = 0;
-
+		
+		gameScreen.setTimerIconVisible(true);
 		gameScreen.tick(0, timeLimit);
 		roundTimer = new Timer(1000, e -> {
 			secElapsed++;

@@ -1,12 +1,5 @@
-/*
- * File: TeamPanel.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Aiden
- * Date: November 27, 2026
- * Description: Displays the team player cards and their status.
- */
+// Description: Displays the all player cards and current player's deck
+// Contributors: Aiden
 
 package view.gameUi;
 
@@ -16,13 +9,13 @@ import model.Player;
 //Aiden
 public class TeamPanel extends JLabel {
 
-	// IMAGE RESOURCES
-	private static final ImageIcon img = new ImageIcon("resources/ui/TeamPanelFrame.png");
-
-	// CONSTANTS
+	// Constants
 	private static final int playerCardDistance = 110;
 
-	// UI ELEMENTS
+	// ImageIcon resources
+	private static final ImageIcon img = new ImageIcon("resources/ui/TeamPanelFrame.png");
+
+	// UI elements
 	private PlayerCard[] playerCards = new PlayerCard[4];
 
 	public TeamPanel() {

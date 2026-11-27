@@ -1,12 +1,5 @@
-/*
- * File: SoundService.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Yanjun, Melinda
- * Date: November 27, 2026
- * Description: Loads and plays application sound effects and music.
- */
+// Description: Loads and plays sound effects and music.
+// Contributors: Yanjun, Melinda
 
 package view;
 
@@ -17,69 +10,79 @@ import java.util.Map;
 
 // yanjun & melinda
 public class SoundService {
-    // Stores pre-loaded audio clips in memory
-    private static final Map<String, Clip> soundMap = new HashMap<>();
-    private static boolean musicOn = true;
-    private static boolean sfxOn = true;
 
-    // 1. Call this once on startup to load audio into RAM
-    public static void loadSound(String name, String filePath) {
-        try {
-            File audioFile = new File(filePath);
-            if (!audioFile.exists()) {
-                System.err.println("Audio file not found: " + filePath);
-                return;
-            }
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioStream);
-            soundMap.put(name, clip);
-        } catch (Exception e) {
-            System.out.println("Error loading sound into memory: " + filePath);
-            e.printStackTrace();
-        }
-    }
+	// Fields
+	// Stores pre-loaded audio clips in memory
+	private static final Map<String, Clip> soundMap = new HashMap<>();
+	private static boolean musicOn = true;
+	private static boolean sfxOn = true;
 
-    // 2. Play background music (loops continuously)
-    public static void playMusic(String name) {
-        Clip clip = soundMap.get(name);
-        if (clip != null && musicOn) {
-            if (!clip.isRunning()) {
-                clip.setFramePosition(0);
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-                clip.start();
-            }
-        }
-    }
+	// Static initialization
+	// Loads the sounds when the class is initialized.
+	static {
+		SoundService.loadSound("bgm", "resources/audio/BackgroundMusic.wav");
+		SoundService.loadSound("click", "resources/audio/Click.wav");
+		SoundService.loadSound("place", "resources/audio/PlacePiece.wav");
+	}
 
-    
-    public static void playSound(String name) {
-        if (!sfxOn) return;
+	// 1. Call this once on startup to load audio into RAM
+	public static void loadSound(String name, String filePath) {
+		try {
+			File audioFile = new File(filePath);
+			if (!audioFile.exists()) {
+				System.err.println("Audio file not found: " + filePath);
+				return;
+			}
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioStream);
+			soundMap.put(name, clip);
+		} catch (Exception e) {
+			System.out.println("Error loading sound into memory: " + filePath);
+			e.printStackTrace();
+		}
+	}
 
-        Clip clip = soundMap.get(name);
-        if (clip != null) {
-            clip.stop();              // stop if it is currently running
-            clip.setFramePosition(0); // rewind to beginning
-            clip.start();             // replay
-        }
-    }
+	// 2. Play background music (loops continuously)
+	public static void playMusic(String name) {
+		Clip clip = soundMap.get(name);
+		if (clip != null && musicOn) {
+			if (!clip.isRunning()) {
+				clip.setFramePosition(0);
+				clip.loop(Clip.LOOP_CONTINUOUSLY);
+				clip.start();
+			}
+		}
+	}
 
-    // 4. Toggle background music
-    public static void setMusicOn(boolean on) {
-        musicOn = on;
-        Clip clip = soundMap.get("bgm");
-        if (clip != null) {
-            if (!musicOn && clip.isRunning()) {
-                clip.stop();
-            } else if (musicOn && !clip.isRunning()) {
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-                clip.start();
-            }
-        }
-    }
+	public static void playSound(String name) {
+		if (!sfxOn)
+			return;
 
-    // 5. Toggle sound effects
-    public static void setSfxOn(boolean on) {
-        sfxOn = on;
-    }
+		Clip clip = soundMap.get(name);
+		if (clip != null) {
+			clip.stop(); // stop if it is currently running
+			clip.setFramePosition(0); // rewind to beginning
+			clip.start(); // replay
+		}
+	}
+
+	// 4. Toggle background music
+	public static void setMusicOn(boolean on) {
+		musicOn = on;
+		Clip clip = soundMap.get("bgm");
+		if (clip != null) {
+			if (!musicOn && clip.isRunning()) {
+				clip.stop();
+			} else if (musicOn && !clip.isRunning()) {
+				clip.loop(Clip.LOOP_CONTINUOUSLY);
+				clip.start();
+			}
+		}
+	}
+
+	// 5. Toggle sound effects
+	public static void setSfxOn(boolean on) {
+		sfxOn = on;
+	}
 }

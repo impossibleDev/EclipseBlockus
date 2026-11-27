@@ -1,12 +1,5 @@
-/*
- * File: GameState.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Melinda
- * Date: November 27, 2026
- * Description: Stores serializable state for saving and restoring a game.
- */
+// Description: Stores state for saving and restoring a game.
+// Contributors: Melinda
 
 package model;
 
@@ -14,6 +7,7 @@ import shared.Team;
 
 // melinda
 public class GameState {
+	// Fields
 	private Team[][] boardState;
 	private Player[] playersState;
 	private int cpuCount;

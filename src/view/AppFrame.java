@@ -1,12 +1,5 @@
-/*
- * File: AppFrame.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Aiden
- * Date: November 27, 2026
- * Description: Creates the main application window and manages screens and overlays.
- */
+// Description: Creates the main application window and is the parent window of screens and overlays.
+// Contributors: Aiden
 
 package view;
 
@@ -22,15 +15,12 @@ import java.awt.event.ComponentEvent;
 //Aiden
 public class AppFrame extends JFrame {
 	
-	//OVERLAY
+	// UI elements
 	private Overlay currentOverlay;
-	private HelpPanelOverlay helpPanelOverlay = new HelpPanelOverlay();
     private final JLayeredPane layeredPane = new JLayeredPane();
-    //SCREENS
     private GameScreen gameScreen = new GameScreen();
     private MenuScreen menuScreen = new MenuScreen();
 
-    //CURRENTSCREEN
     private Screen screen;
 
     public AppFrame(){
@@ -52,24 +42,7 @@ public class AppFrame extends JFrame {
         setVisible(true);
     }
 
-
-    public void toGameScreen(){
-        setScreen(gameScreen);
-
-    }
-
-    public void toMenuScreen(){
-        setScreen(menuScreen);
-    }
-
-    public GameScreen getGameScreen() {
-        return gameScreen;
-    }
-    public MenuScreen getMenuScreen() {
-        return menuScreen;
-    }
-
-
+    //toScreen methods
     private void setScreen(Screen screen) {
         if (this.screen != null) {
             layeredPane.remove(this.screen);
@@ -82,7 +55,26 @@ public class AppFrame extends JFrame {
         screen.repaint();
     }
     
-    private void setOverlay(Overlay overlay){
+    public void toGameScreen(){
+        setScreen(gameScreen);
+
+    }
+
+    public void toMenuScreen(){
+        setScreen(menuScreen);
+    }
+
+    // Getters
+    public GameScreen getGameScreen() {
+        return gameScreen;
+    }
+    public MenuScreen getMenuScreen() {
+        return menuScreen;
+    }
+
+
+    
+    private void setOverlay(Overlay overlay){ //TODO setOverlay() is not used??
         removeOverlay();
         currentOverlay = overlay;
         layeredPane.add(overlay, JLayeredPane.PALETTE_LAYER);

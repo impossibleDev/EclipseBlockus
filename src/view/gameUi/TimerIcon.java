@@ -1,12 +1,5 @@
-/*
- * File: TimerIcon.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Melinda, Aiden
- * Date: November 27, 2026
- * Description: Displays and redraws the remaining turn time.
- */
+// Description: Displays and draws turn time.
+// Contributors: Aiden, Melinda
 
 package view.gameUi;
 
@@ -16,14 +9,16 @@ import java.awt.*;
 // melinda, aiden
 public class TimerIcon extends JLabel {
 
-	// CONSTANTS
+	// Constants
 	private final int warningTime = 3;
 	private final Color fillColor = Color.PINK;
 	private final Color warningFillColor = Color.YELLOW;
 
+	// ImageIcon resources
 	private static final ImageIcon baseImg = new ImageIcon("resources/ui/TimerIcon.png");
 	private static final ImageIcon borderImg = new ImageIcon("resources/ui/TimerIconBorder.png");
 
+	// Fields
 	private int time, maxTime;
 
 	// Constructor

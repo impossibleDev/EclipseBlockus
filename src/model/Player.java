@@ -1,12 +1,5 @@
-/*
- * File: Player.java
- * Project: SDP #1 - BLOKUS
- * Course: [Course code, section, and instructor]
- * Group: 5 (Aiden, Yanjun, Melinda)
- * Contributors: Yanjun, Melinda
- * Date: November 27, 2026
- * Description: Stores player state, pieces, cards, and game options.
- */
+// Description: Stores player state, pieces, card deck, etc
+// Contributors: Yanjun, Melinda, Aiden
 
 package model;
 
@@ -18,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
+	// Fields
 	Team team;
 	CardTypes[] deck = new CardTypes[GameConstants.deckSize];
 	private boolean isCpu;
@@ -39,6 +33,7 @@ public class Player {
 	// DETACH ability
 	private boolean detachActive = false;
 
+	//Constructors
 	public Player(Team team) {
 		this(team, false);
 	}
@@ -48,6 +43,7 @@ public class Player {
 		this.isCpu = isCpu;
 		this.remainingFlips = -1; // default to unlimited
 
+		//Initialize default card deck
 		deck[0] = CardTypes.SKIP;
 		deck[1] = CardTypes.EXPLODE;
 		deck[2] = CardTypes.REGENERATE;
@@ -66,7 +62,8 @@ public class Player {
 			availablePieces = new boolean[0];
 		}
 	}
-
+	
+	//Getters & Setters
 	public Team getTeam() {
 		return team;
 	}
