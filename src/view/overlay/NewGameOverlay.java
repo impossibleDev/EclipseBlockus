@@ -1,61 +1,74 @@
 package view.overlay;
 
-
-import javax.swing.JComboBox;
-import javax.swing.JButton;
+import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 
-//melinda
+import view.GuiUtil;
+
+// melinda
 public class NewGameOverlay extends Overlay {
 
-	//imageIcon Resources
+	// ImageIcon resources
 	private static final ImageIcon frameImg = new ImageIcon("resources/ui/NewGameOverlayFrame.png");
 	private static final ImageIcon playButtonImg = new ImageIcon("resources/ui/NewGameOverlayPlayButton.png");
 	private static final ImageIcon playButtonHoverImg = new ImageIcon("resources/ui/NewGameOverlayPlayButtonHover.png");
 
-	//UI Elements
-	private final JComboBox<Integer> cpuSelector = new JComboBox<>(new Integer[] { 1, 2, 3 });
-	private final JComboBox<Integer> flipSelector = new JComboBox<>(new Integer[] { 10, 25, 50 });
-	private final JComboBox<Integer> timeLimitSelector = new JComboBox<>(new Integer[] { 10, 30, 60 });
+	// UI elements (supports both integers and "Unlimited")
+	private final JComboBox<Object> cpuSelector = new JComboBox<>(new Object[] { 0, 1, 2, 3, 4 });
+	private final JComboBox<Object> flipSelector = new JComboBox<>(new Object[] { "Unlimited", 10, 25, 50 });
+	private final JComboBox<Object> timeLimitSelector = new JComboBox<>(new Object[] { "Unlimited", 10, 30, 60 });
 	private final JButton startButton = new JButton(playButtonImg);
 
-	//Constructor
+	// Constructor
 	public NewGameOverlay() {
 		super(frameImg);
-		
-		//positioning and adding elements
+
+		// Positioning close button inherited from Overlay
 		closeButton.setLocation(525, 75);
 
-		cpuSelector.setBounds(310, 150, 70, 40);
-		add(cpuSelector);
+		// Setup combo boxes cleanly using the helper method
+		setupSelector(cpuSelector, 150);
+		setupSelector(flipSelector, 200);
+		setupSelector(timeLimitSelector, 250);
 
-		flipSelector.setBounds(310, 200, 70, 40);
-		add(flipSelector);
-
-		timeLimitSelector.setBounds(350, 250, 70, 40);
-		add(timeLimitSelector);
-
+		// Style and position start button
 		startButton.setRolloverIcon(playButtonHoverImg);
 		startButton.setRolloverEnabled(true);
+		startButton.setBorderPainted(false);
+		startButton.setContentAreaFilled(false);
+		startButton.setFocusPainted(false);
 		startButton.setBounds(255, 300, 189, 90);
 		add(startButton);
 	}
 
-	//Getters for UI elements
+	private void setupSelector(JComboBox<Object> box, int y) {
+		styleComboBox(box);
+		box.setBounds(350, y, 130, 40);
+		add(box);
+	}
+
+	private void styleComboBox(JComboBox<Object> box) {
+		box.setFont(GuiUtil.PIXELFONTSMALL);
+		box.setBackground(Color.WHITE);
+		box.setForeground(Color.BLACK);
+	}
+
+	// Getters for UI elements
 	public JButton getStartButton() {
 		return startButton;
 	}
 
-
-	public JComboBox<Integer> getCpuSelector() {
+	public JComboBox<Object> getCpuSelector() {
 		return cpuSelector;
 	}
 
-	public JComboBox<Integer> getFlipSelector() {
+	public JComboBox<Object> getFlipSelector() {
 		return flipSelector;
 	}
 
-	public JComboBox<Integer> getTimeLimitSelector() {
+	public JComboBox<Object> getTimeLimitSelector() {
 		return timeLimitSelector;
 	}
 }

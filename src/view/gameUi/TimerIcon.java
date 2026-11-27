@@ -3,32 +3,36 @@ package view.gameUi;
 import javax.swing.*;
 import java.awt.*;
 
-public class TimerIcon extends JLabel {//switch back to JPanel later
-	private static final ImageIcon img = new ImageIcon("resources/ui/TimerIcon.png");
-    private int time;
-    private int maxTime;
+// melinda, aiden
+public class TimerIcon extends JLabel {
+	
+	//CONSTANTS
+	private final int warningTime = 3;
+	private final Color fillColor = Color.PINK;
+	private final Color warningFillColor = Color.YELLOW;
+	
+	private static final ImageIcon baseImg = new ImageIcon("resources/ui/TimerIcon.png");
+	private static final ImageIcon borderImg = new ImageIcon("resources/ui/TimerIconBorder.png");
+	
+	private int time, maxTime;
 
-    public TimerIcon(int maxTime){
-        super(img);
-        setOpaque(false);
-        setSize(80,80);
-        this.maxTime = maxTime;
-        
-        this.time = 75;
-        this.maxTime = 360;
-    }
+	//Constructor
+	public TimerIcon() {
+		super(baseImg);
+		setSize(80,80);
+	}
 
-    public void update(int time){
-        this.time = time;
-        repaint();//needed??
-    }
-    @Override
-    protected void paintComponent(Graphics g) {
-        int angleExtent = (int) (-360.0 * time / maxTime);
-        g.setColor(Color.YELLOW);
-        g.fillArc(11, 21, 56, 56, 90, angleExtent);
-        super.paintComponent(g);
-        //Custom paint for the timer (pie-like thing)
-        //the ratio is time/maxTime % of the pie
-    }
+	public void update(int time, int maxTime) {
+		this.time = time;
+		this.maxTime = maxTime;
+		repaint();
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.setColor(maxTime-time>warningTime ? fillColor : warningFillColor);
+		g.fillArc(11, 21, 56, 56, 90, -(int)((double)time*360/maxTime));
+		borderImg.paintIcon(this, g, 0, 0);
+	}
 }

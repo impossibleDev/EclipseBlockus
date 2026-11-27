@@ -11,10 +11,11 @@ import shared.Team;
 public class PiecesPanel extends JLabel {
 
 	private static final ImageIcon img = new ImageIcon("resources/ui/PiecePanelFrame.png");
-	private Piece[] pieces;
+	private Piece[] pieces = new Piece[0];
 	private Piece hoveredPiece;
 	private Piece selectedPiece;
 	private JPanel piecesContentPanel;
+	private Piece bonusOneByOnePiece;
 
 	public PiecesPanel() {
 		super(img);
@@ -34,6 +35,10 @@ public class PiecesPanel extends JLabel {
 			}
 		}
 
+		bonusOneByOnePiece = new Piece(new boolean[][] { { true } }, Team.RED);
+		bonusOneByOnePiece.setVisible(false);
+		piecesContentPanel.add(bonusOneByOnePiece);
+
 		JScrollPane scrollPane = new JScrollPane(piecesContentPanel);
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
@@ -49,7 +54,14 @@ public class PiecesPanel extends JLabel {
 		return pieces;
 	}
 
+	public Piece getBonusOneByOnePiece() {
+		return bonusOneByOnePiece;
+	}
+
 	public int getPieceNum(Piece piece) {
+		if (piece == bonusOneByOnePiece) {
+			return 0;
+		}
 		for (int i = 0; i < pieces.length; i++) {
 			if (pieces[i] == piece) {
 				return i;
@@ -97,14 +109,21 @@ public class PiecesPanel extends JLabel {
 			selectedPiece = null;
 		}
 	}
-
+	
+	//yanjun
 	public void update(Player currentPlayer) {
-		if (currentPlayer == null)
+		if (currentPlayer == null) {
 			return;
-		for (Piece piece : pieces) {
-			if (piece != null) {
-				piece.setTeam(currentPlayer.getTeam());
+		}
+		for (int i = 0; i < pieces.length; i++) {
+			if (pieces[i] != null) {
+				pieces[i].setTeam(currentPlayer.getTeam());
+				pieces[i].setVisible(!currentPlayer.isUsed(i));
 			}
 		}
+		bonusOneByOnePiece.setTeam(currentPlayer.getTeam());
+		bonusOneByOnePiece.setVisible(currentPlayer.getBonusOneByOneCount() > 0);
+		piecesContentPanel.revalidate();
+		piecesContentPanel.repaint();
 	}
 }

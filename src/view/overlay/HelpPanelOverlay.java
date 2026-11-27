@@ -1,15 +1,9 @@
 package view.overlay;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
-import javax.swing.SwingConstants;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -83,9 +77,15 @@ public class HelpPanelOverlay extends Overlay {
    How to Play
    
    BLOKUS is a 4-player game where the ultimate objective is to have as many blocks on the board as possible. Each player chooses a colour that corresponds to their blocks.
-   Each player’s first block must touch the corner of the board. Each block after must touch another block of the same colour at the corners only. Blocks of different colours can touch at the edges freely. While dragging a block, press R to rotate it or F to flip it. The winner is determined by whichever player has the fewest leftover squares in unused blocks after no more blocks can be placed.
+   Each player’s first block must touch the corner of the board. Each block after must touch another block of the same colour at the corners only. Blocks of different colours can touch at the edges freely. Players can get a random ability every 4 rounds. While dragging a block, press R to rotate it or F to flip it. The winner is determined by whichever player has the most squares covered by their pieces.
    
-   
+   Description of Abilities
+   Stop: Skips all players turns (gives player an extra turn)
+   Explode: Randomly clears opponent squares within a small area around the chosen tile (70% chance per square)
+   Regenerate: Generates a 1x1 block for the player
+   Detach: Allows players to place their block anywhere on the board (bypasses the edge-to-edge rule)
+
+
    FAQ
    
    Q: What happens if I have no legal moves left?
@@ -95,7 +95,7 @@ public class HelpPanelOverlay extends Overlay {
    A: No, you can only be skipped when you truly have no legal moves left.
    
    Q: How is my final score calculated?
-   A: Your score is based on the number of squares left in your unused blocks. Fewer leftover squares means a higher score.
+   A: The player with the most squares covered by their pieces wins.
    
    Q: When does the game officially end?
    A: When none of the remaining players can place any more blocks.

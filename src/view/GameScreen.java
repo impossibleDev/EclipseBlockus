@@ -6,7 +6,9 @@ import view.gameUi.DeckPanel;
 import view.gameUi.Piece;
 import view.gameUi.PiecesPanel;
 import view.gameUi.TeamPanel;
+import view.gameUi.TimerIcon;
 
+import java.awt.Color;
 import java.util.EnumMap;
 import javax.swing.*;
 
@@ -15,20 +17,20 @@ import model.Player;
 //Aiden
 public class GameScreen extends Screen {
 
-	//imageIcon Resources
-	public static final ImageIcon bgImageIcon = new ImageIcon("resources/bg/gameBg.png");
+	// imageIcon Resources
+	private static final ImageIcon bgImageIcon = new ImageIcon("resources/bg/gameBg.png");
 	private static final ImageIcon backButtonImg = new ImageIcon("resources/ui/BackButton.png");
 	private static final ImageIcon backButtonHoverImg = new ImageIcon("resources/ui/BackButtonHover.png");
-	public static final EnumMap<Team, ImageIcon> cornerImages = new EnumMap<>(Team.class);
+	private static final EnumMap<Team, ImageIcon> cornerImages = new EnumMap<>(Team.class);
 	static {
-		//loads  corner images
+		// loads corner images
 		cornerImages.put(Team.YELLOW, new ImageIcon("resources/bg/CornerYellow.png"));
 		cornerImages.put(Team.RED, new ImageIcon("resources/bg/CornerRed.png"));
 		cornerImages.put(Team.GREEN, new ImageIcon("resources/bg/CornerGreen.png"));
 		cornerImages.put(Team.BLUE, new ImageIcon("resources/bg/CornerBlue.png"));
 	}
 
-	//UI Elements
+	// UI Elements
 	private BoardPanel boardPanel;
 	private TeamPanel teamPanel;
 	private DeckPanel deckPanel;
@@ -40,13 +42,14 @@ public class GameScreen extends Screen {
 	private JLabel currentCornerImage;
 	private JLabel bgLabel = new JLabel(bgImageIcon);
 	private EnumMap<Team, JLabel> cornerLabels = new EnumMap<>(Team.class);
+	private JLabel roundTimerLabel = new JLabel("Time: --", SwingConstants.CENTER); // melinda
 
-	//Constructors
+	// constructor
 	public GameScreen() {
 		super();
 		setLayout(null);
 
-		// add UI elements
+		// add ui elements
 		boardPanel = new BoardPanel();
 		teamPanel = new TeamPanel();
 		deckPanel = new DeckPanel();
@@ -62,14 +65,18 @@ public class GameScreen extends Screen {
 		helpButton = GuiUtil.createButton(ViewConstants.helpImage);
 		backButton = GuiUtil.createButton(backButtonImg, backButtonHoverImg);
 
+		roundTimerLabel.setFont(GuiUtil.PIXELFONTMEDIUM);
+		roundTimerLabel.setForeground(Color.WHITE);
+		roundTimerLabel.setBounds(350, 50, 500, 40);
+
 		add(backButton);
 		add(boardPanel);
 		add(deckPanel);
 		add(teamPanel);
-		// add(piecesPanel);
 		add(piecesScrollPane);
 		add(settingsButton);
 		add(helpButton);
+		add(roundTimerLabel);
 
 		// corner images
 		JLabel yellowCorner = new JLabel(cornerImages.get(Team.YELLOW));
@@ -112,6 +119,37 @@ public class GameScreen extends Screen {
 		}
 	}
 
+	//called in Timer events
+	public void tick(int secElapsed, int secLimit) {
+		deckPanel.updateTimer(secElapsed, secLimit);
+		roundTimerLabel.setText("Time: " + (secLimit-secElapsed) + "s");
+		
+	}
+
+	@Override
+	public void resize() {
+		super.resize();
+		int w = getWidth();
+		int h = getHeight();
+
+		boardPanel.setBounds((int) (w / 2 - 250), (int) (h / 2 - 250), 500, 500);
+		teamPanel.setBounds(50, 50, 250, 660);
+		deckPanel.setBounds(50, 490, 250, 220);
+		piecesScrollPane.setBounds(w - 300, 60, 250, 660);
+
+		settingsButton.setBounds(w - 70, 10, 60, 60);
+		helpButton.setBounds(w - 140, 10, 60, 60);
+		backButton.setBounds(20, 20, 60, 60);
+
+		cornerLabels.get(Team.BLUE).setBounds(0, 0, 600, 700);
+		cornerLabels.get(Team.GREEN).setBounds(w - 600, 0, 600, 700);
+		cornerLabels.get(Team.RED).setBounds(0, h - 700, 600, 700);
+		cornerLabels.get(Team.YELLOW).setBounds(w - 600, h - 700, 600, 700);
+
+		bgLabel.setSize(getSize());
+	}
+
+	
 	// getters for ui elements
 	public PiecesPanel getPiecePanel() {
 		return piecesPanel;
@@ -128,7 +166,7 @@ public class GameScreen extends Screen {
 	public DeckPanel getDeckPanel() {
 		return deckPanel;
 	}
-	
+
 	public JButton getSettingsButton() {
 		return settingsButton;
 	}
@@ -141,31 +179,13 @@ public class GameScreen extends Screen {
 		return backButton;
 	}
 
-	@Override
-	public void resize() {
-		super.resize();
-		int w = getWidth();
-		int h = getHeight();
-
-		boardPanel.setBounds((int) (w / 2 - 250), (int) (h / 2 - 250), 500, 500);
-		teamPanel.setBounds(50, 50, 250, 660);
-		deckPanel.setBounds(50, 490, 250, 220);
-		//piecesPanel.setBounds(w - 300, 50, 250, 660);
-		//piecesPanel.setSize(piecesPanel.getPreferredSize());
-		piecesScrollPane.setBounds(w - 300, 60, 250, 660);
-
-		settingsButton.setBounds(w - 70, 10, 60, 60);
-		helpButton.setBounds(w - 140, 10, 60, 60);
-		backButton.setBounds(20, 20, 60, 60);
-
-		cornerLabels.get(Team.BLUE).setBounds(0, 0, 600, 700);
-		cornerLabels.get(Team.GREEN).setBounds(w - 600, 0, 600, 700);
-		cornerLabels.get(Team.RED).setBounds(0, h - 700, 600, 700);
-		cornerLabels.get(Team.YELLOW).setBounds(w - 600, h - 700, 600, 700);
-
-		bgLabel.setSize(getSize());
+	public JLabel getRoundTimerLabel() {
+		return roundTimerLabel;
 	}
-
+	
+	
+	//WRAPPERS
+	
 	public void hoverPiece(Piece piece) {
 		piecesPanel.hoverPiece(piece);
 	}

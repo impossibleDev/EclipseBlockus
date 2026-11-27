@@ -24,7 +24,7 @@ public class AppFrame extends JFrame {
     private Screen screen;
 
     public AppFrame(){
-        super("Blockus");
+        super("Blokus");
 
         layeredPane.setLayout(null);
         setContentPane(layeredPane);
@@ -71,10 +71,6 @@ public class AppFrame extends JFrame {
         screen.repaint();
     }
     
-    public void setOverlayHelpPanel() {
-    	setOverlay(helpPanelOverlay);
-//    	setOverlay(new SettingsOverlay());
-    }
     private void setOverlay(Overlay overlay){
         removeOverlay();
         currentOverlay = overlay;
