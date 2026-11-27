@@ -26,6 +26,7 @@ public class AppFrame extends JFrame {
     public AppFrame(){
         super("Blokus");
 
+        setResizable(false);
         layeredPane.setLayout(null);
         setContentPane(layeredPane);
         setSize(1200, 800);

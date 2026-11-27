@@ -18,15 +18,10 @@ public class Piece extends JButton {
 	public Piece(boolean[][] data, Team team) {
 		setData(data);
 		setTeam(team);
-
-		// melinda
-		setContentAreaFilled(false);
-		setBorderPainted(false);
-		setFocusPainted(false);
-		setOpaque(false);
 		
 	}
 
+	//getters & setters for data
 	public boolean[][] getData() {
 		return data;
 	}
@@ -47,13 +42,6 @@ public class Piece extends JButton {
 		return new Dimension(w, h);
 	}
 
-	@Override
-	public boolean contains(int x, int y) {
-		if (data == null)
-			return super.contains(x, y);
-
-		return x >= 0 && x <= getWidth() && y >= 0 && y <= getHeight();
-	}
 
 	public void setTeam(Team team) {
 		this.team = team;
@@ -94,7 +82,7 @@ public class Piece extends JButton {
 		}
 	}
 
-	// Aka appearance when selected
+	// aka appearance when selected, if it have outline or not
 	public void altSkinOn(boolean altSkin) {
 		this.altSkin = altSkin;
 		repaint();

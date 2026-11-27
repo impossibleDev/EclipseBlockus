@@ -29,6 +29,8 @@ public class TeamPanel extends JLabel {
 
 	public void update(Player[] players) {
 		for (int i = 0; i < players.length; i++) {
+			// Pass the player object down so PlayerCard can check their active card &
+			// cooldown status
 			playerCards[i].update(players[i]);
 		}
 	}

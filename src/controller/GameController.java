@@ -24,16 +24,15 @@ import view.gameUi.Piece;
 
 // Aiden & Melinda & Yanjun
 public class GameController implements ActionListener, MouseListener, MouseMotionListener {
-	
-	//CONSTANTS
+
+	// CONSTANTS
 	private static final String ACTION_SETTINGS = "settings";
 	private static final String ACTION_HELP = "help";
 	private static final String ACTION_BACK = "back";
 	private static final String ACTION_PIECE = "piece";
 	private static final String ACTION_CARD_PREFIX = "card:";
 
-	
-	//FIELDS
+	// FIELDS
 	private AppController appController;
 	private Game model = new Game();
 	private GameScreen gameScreen;
@@ -42,6 +41,7 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 	private boolean[][] previewPiece;
 	private CardTypes previewCardType;
 	private int lastMouseX, lastMouseY;
+	private int previewCardIndex = -1;
 
 	// teams controlled by a real person (the rest are computers)
 	private final Set<Team> humanTeams = new HashSet<>();
@@ -51,8 +51,7 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 	private int secElapsed = 0;
 	private int currentTimeLimit;
 
-	
-	//Constructor - Aiden
+	// Constructor - Aiden
 	public GameController(AppController appController, GameScreen gameScreen) {
 		this.appController = appController;
 		this.gameScreen = gameScreen;
@@ -68,7 +67,7 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 		gameScreen.getBackButton().setActionCommand(ACTION_BACK);
 		gameScreen.getBackButton().addActionListener(this);
 
-		//listener for pieces in PiecePanel
+		// listener for pieces in PiecePanel
 		for (Piece piece : gameScreen.getPiecePanel().getPieces()) {
 			piece.setActionCommand(ACTION_PIECE);
 			piece.addActionListener(this);
@@ -80,7 +79,7 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 		bonusPiece.addActionListener(this);
 		bonusPiece.addMouseListener(this);
 
-		//listener for card buttons in DeckPanel
+		// listener for card buttons in DeckPanel
 		JButton[] deck = gameScreen.getDeckPanel().getCurrentDeck();
 		for (int i = 0; i < deck.length; i++) {
 			deck[i].setActionCommand(ACTION_CARD_PREFIX + i);
@@ -93,7 +92,7 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 		new Keybinds(gameScreen, this);
 	}
 
-	//Aiden
+	// Aiden
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
@@ -111,7 +110,7 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 			return;
 		}
 
-		//coresponding action based on it's "tag"
+		// coresponding action based on it's "tag"
 		switch (action) {
 		case ACTION_SETTINGS:
 			AppController.showSettingsOverlay();
@@ -120,6 +119,7 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 			AppController.showHelpOverlay();
 			break;
 		case ACTION_BACK:
+			stopAllTimers();
 			AppController.showSaveOverlay();
 			break;
 		case ACTION_PIECE:
@@ -127,12 +127,22 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 				return;
 			selectPiece((Piece) e.getSource());
 			break;
+
 		default:
 			break;
 		}
 	}
 
-	//Aiden
+	private void stopAllTimers() {
+		if (roundTimer != null) {
+			roundTimer.stop();
+		}
+		if (cpuTimer != null) {
+			cpuTimer.stop();
+		}
+	}
+
+	// Aiden
 	private void selectPiece(Piece piece) {
 		// if already selected, deselect
 		if (gameScreen.getPiecePanel().getSelectedPiece() == piece) {
@@ -146,10 +156,15 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 		gameScreen.selectPiece(piece);
 	}
 
-	//Aiden
+	// Aiden
 	private void selectCard(JButton cardButton, int index) {
 		Player current = model.getCurrentPlayer();
 		if (!current.canUseCard()) {
+			return;
+		}
+
+		// Prevent using more than one card per turn
+		if (current.hasUsedCardThisTurn()) {
 			return;
 		}
 
@@ -164,17 +179,39 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 		}
 
 		clearSelection();
-		if (card == CardTypes.REGENERATE) {
-			model.playCard(card, 0, 0);
-			current.triggerCardCooldown();
-			gameScreen.getDeckPanel().setDeckButtonsEnabled(false);
+
+		// Save the index so we know which card to remove later
+		previewCardIndex = index;
+
+		// Cards that do not need clicking the board next
+		if (card == CardTypes.REGENERATE || card == CardTypes.SKIP || card == CardTypes.DETACH) {
+			handleCardUsage(card, index, 0, 0);
 			SoundService.playSound("place");
-			refreshGameScreen();
 			return;
 		}
 
+		// Targetable cards (like Explosion) require clicking the board next
 		previewCardType = card;
-		gameScreen.getDeckPanel().selectCard(cardButton);
+		gameScreen.getDeckPanel().selectCard(cardButton); // Ensure selection highlight is set
+	}
+
+	public void handleCardUsage(CardTypes card, int cardIndex, int x, int y) {
+		// Play the card ability through the model
+		model.playCard(card, x, y);
+
+		// Remove the card from the player's deck array
+		model.getCurrentPlayer().useCardAtIndex(cardIndex);
+
+		// Mark that the player has used a card this turn
+		model.getCurrentPlayer().setUsedCardThisTurn(true);
+
+		// Disable all deck buttons and show the greyed-out state for the rest of the
+		// turn
+		gameScreen.getDeckPanel().setDeckButtonsEnabled(false);
+
+		// Refresh UI
+		clearSelection();
+		refreshGameScreen();
 	}
 
 	@Override
@@ -188,22 +225,20 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 			int x = gameScreen.getBoardPanel().getPreviewX();
 			int y = gameScreen.getBoardPanel().getPreviewY();
 
-			// Play card
+			// Play targetable card (Fixed to use saved previewCardIndex directly)
 			if (previewCardType != null) {
 				SoundService.playSound("place");
-				Player current = model.getCurrentPlayer();
-				model.playCard(previewCardType, x, y);
-				current.triggerCardCooldown();
-				gameScreen.getDeckPanel().setDeckButtonsEnabled(false);
-				clearSelection();
-				refreshGameScreen();
-				advanceTurnFlow();
+
+				if (previewCardIndex != -1) {
+					handleCardUsage(previewCardType, previewCardIndex, x, y);
+				}
 				return;
 			}
 
-			// Play turn (place piece)
+			// Play turn (place piece) - Pass model.getCurrentPlayer() here!
 			if (previewPiece != null && PiecePlacer.validMove(model.getBoard(), x, y, previewPiece,
-					model.getCurrentPlayer().getTeam())) {
+					model.getCurrentPlayer().getTeam(), model.getCurrentPlayer())) {
+
 				Piece selectedPiece = gameScreen.getPiecePanel().getSelectedPiece();
 				if (selectedPiece == gameScreen.getPiecePanel().getBonusOneByOnePiece()) {
 					model.playBonusOneByOne(x, y);
@@ -220,15 +255,16 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 		}
 	}
 
-	//Aiden
+	// Aiden
 	private void clearSelection() {
 		previewPiece = null;
 		previewCardType = null;
+		previewCardIndex = -1;
 		gameScreen.getPiecePanel().deselectPiece();
 		gameScreen.getDeckPanel().deselectCard();
 	}
 
-	//Aiden
+	// Aiden
 	private void refreshGameScreen() {
 		gameScreen.update(model.getCurrentPlayer(), model.getPlayers(), model.getBoard());
 	}
@@ -283,7 +319,8 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 		}
 	}
 
-	// redraws the preview right away, using the last known mouse position on the board
+	// redraws the preview right away, using the last known mouse position on the
+	// board
 	private void refreshPreview() {
 		if (previewCardType != null) {
 			gameScreen.getBoardPanel().previewPieceAlt(lastMouseX, lastMouseY);
@@ -292,7 +329,8 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 		gameScreen.getBoardPanel().previewPiece(lastMouseX, lastMouseY, previewPiece);
 	}
 
-	// Coordinates game over checks, round timers, and CPU turns after any turn change
+	// Coordinates game over checks, round timers, and CPU turns after any turn
+	// change
 	private void advanceTurnFlow() {
 		advanceTurnFlow(true);
 	}
@@ -316,12 +354,12 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 			if (roundTimer != null) {
 				roundTimer.stop();
 			}
-			gameScreen.getRoundTimerLabel().setText("CPU Turn...");
 			computerTurnIfNeeded();
 		}
 	}
 
-	// lets the computer play if it is a computer's turn, one move at a time with a short delay
+	// lets the computer play if it is a computer's turn, one move at a time with a
+	// short delay
 	private void computerTurnIfNeeded() {
 		if (model.isGameOver() || isHuman(model.getCurrentPlayer().getTeam()))
 			return;
@@ -350,7 +388,8 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 		cpuTimer.start();
 	}
 
-	// cpus = number of computer players (0 to 3). Humans take the first colours in turn order.
+	// cpus = number of computer players (0 to 3). Humans take the first colours in
+	// turn order.
 	public void setCpuCount(int cpus) {
 		humanTeams.clear();
 		Team[] order = { Team.BLUE, Team.GREEN, Team.YELLOW, Team.RED };
@@ -406,7 +445,8 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 	}
 
 	// melinda
-	// initializes game options (number of CPUs, maximum number of flips, and time limit per round)
+	// initializes game options (number of CPUs, maximum number of flips, and time
+	// limit per round)
 	public void initialNewGameSettings(int cpuCount, int maxFlips, int timeLimit) {
 		this.currentTimeLimit = timeLimit;
 		model.initializeNewGame(cpuCount, maxFlips, timeLimit);
@@ -416,24 +456,24 @@ public class GameController implements ActionListener, MouseListener, MouseMotio
 	}
 
 	// melinda
-	// starts the timer for the player based on user's desired time limit declared in new game overlay
+	// starts the timer for the player based on user's desired time limit declared
+	// in new game overlay
 	public void startTurnTimer(int timeLimit) {
 		if (roundTimer != null) {
 			roundTimer.stop();
 		}
 
 		if (timeLimit < 0) {
-			gameScreen.getRoundTimerLabel().setText("Time: Unlimited");
 			return;
 		}
 
 		secElapsed = 0;
-		
+
 		gameScreen.tick(0, timeLimit);
 		roundTimer = new Timer(1000, e -> {
 			secElapsed++;
 			gameScreen.tick(secElapsed, timeLimit);
-			
+
 			if (secElapsed >= timeLimit) {
 				roundTimer.stop();
 

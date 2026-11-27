@@ -4,6 +4,8 @@ import shared.CardTypes;
 import shared.GameConstants;
 import shared.PieceData;
 import shared.Team;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
 	Team team;
@@ -18,6 +20,14 @@ public class Player {
 	private boolean usedCardThisTurn = false;
 
 	private int cardCooldownTurns = 0;
+
+	// Turn-based card progression tracking fields
+	private int turnsTaken = 0;
+	private int turnsSinceFirstCard = 0;
+	private boolean hasReceivedFirstCard = false;
+
+	// DETACH ability
+	private boolean detachActive = false;
 
 	public Player(Team team) {
 		this(team, false);
@@ -163,7 +173,8 @@ public class Player {
 	}
 
 	public boolean canUseCard() {
-		return cardCooldownTurns <= 0;
+		// Can use a card if they have at least one card in their hand
+		return deck != null && deck.length > 0 && cardCooldownTurns <= 0;
 	}
 
 	// every 4 rounds
@@ -177,8 +188,71 @@ public class Player {
 		}
 	}
 
+	// Melinda -- detach ability logic
+	public boolean isDetachActive() {
+		return detachActive;
+	}
+
+	public void setDetachActive(boolean detachActive) {
+		this.detachActive = detachActive;
+	}
+
 	public void beginTurn() {
 		tickCardCooldown(); // Decrements cardCooldownTurns each time their turn starts
+		turnsTaken++;
+
+		// Reset detach flag and turn card usage flags at the start of a new turn
+		detachActive = false;
+		this.usedCardThisTurn = false;
+		
+		// Give the first random card exactly on their 3rd turn (optional progression logic)
+		if (!hasReceivedFirstCard && turnsTaken >= 3) {
+			hasReceivedFirstCard = true;
+			addRandomCard();
+		}
+		// After the first card, add another random card every 4 turns (capped at 4)
+		else if (hasReceivedFirstCard) {
+			turnsSinceFirstCard++;
+			if (turnsSinceFirstCard >= 4) {
+				turnsSinceFirstCard = 0;
+				addRandomCard();
+			}
+		}
+	}
+
+	// Adds a new random card to the player's hand without overwriting, capped at 4
+	public void addRandomCard() {
+		CardTypes[] allCards = { CardTypes.SKIP, CardTypes.EXPLODE, CardTypes.REGENERATE, CardTypes.DETACH };
+		CardTypes randomCard = allCards[(int) (Math.random() * allCards.length)];
+
+		List<CardTypes> cardList = new ArrayList<>();
+		if (deck != null) {
+			for (CardTypes c : deck) {
+				if (c != null) {
+					cardList.add(c);
+				}
+			}
+		}
+
+		// Only add a new card if under the maximum cap of 4
+		if (cardList.size() < 4) {
+			cardList.add(randomCard);
+			deck = cardList.toArray(new CardTypes[0]);
+		}
+	}
+
+	// Removes a specific card from the player's hand once used
+	public void useCardAtIndex(int index) {
+		if (deck == null || index < 0 || index >= deck.length) {
+			return;
+		}
+		List<CardTypes> cardList = new ArrayList<>();
+		for (int i = 0; i < deck.length; i++) {
+			if (i != index && deck[i] != null) {
+				cardList.add(deck[i]);
+			}
+		}
+		deck = cardList.toArray(new CardTypes[0]);
 	}
 
 	public Player copy() {
@@ -192,6 +266,13 @@ public class Player {
 		cloned.setBonusOneByOneCount(this.bonusOneByOneCount);
 		cloned.setUsedCardThisTurn(this.usedCardThisTurn);
 		cloned.cardCooldownTurns = this.cardCooldownTurns;
+		cloned.turnsTaken = this.turnsTaken;
+		cloned.turnsSinceFirstCard = this.turnsSinceFirstCard;
+		cloned.hasReceivedFirstCard = this.hasReceivedFirstCard;
+
+		if (this.deck != null) {
+			cloned.deck = this.deck.clone();
+		}
 
 		return cloned;
 	}
@@ -199,5 +280,4 @@ public class Player {
 	public void setCardCooldownTurns(int cardCooldownTurns) {
 		this.cardCooldownTurns = Math.max(0, cardCooldownTurns);
 	}
-
 }

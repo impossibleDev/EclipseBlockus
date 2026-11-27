@@ -8,12 +8,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import model.Player;
+import shared.CardTypes;
 import shared.GameConstants;
 import shared.Team;
 import view.GuiUtil;
 import view.ViewConstants;
 
-//Aiden
 public class DeckPanel extends JLabel {
 
 	// Constants
@@ -33,57 +33,50 @@ public class DeckPanel extends JLabel {
 	private JButton[] currentDeck = new JButton[GameConstants.deckSize];
 	private JButton hoveredCard;
 	private JButton selectedCard;
-	private JLabel flipCounterLabel = new JLabel("Flips: INF"); // melinda
-	private TimerIcon timerIcon = new TimerIcon();
-	
-	//Constructor
+	private JLabel flipCounterLabel = new JLabel("Flips: Unlimited"); // melinda
+	private TimerIcon timerIcon;
+
 	public DeckPanel() {
 		setLayout(null);
 
 		for (int i = 0; i < currentDeck.length; i++) {
 			currentDeck[i] = new JButton();
-			currentDeck[i].setBounds(30 + (deckIconSize + deckIconPadding) * i, 120, deckIconSize, deckIconSize);
+			currentDeck[i].setBounds(30 + (deckIconSize + deckIconPadding) * i, 70, deckIconSize, deckIconSize);
 			add(currentDeck[i]);
 		}
 
-		timerIcon.setLocation(150, 15);
+		timerIcon = new TimerIcon();
+		timerIcon.setLocation(150, 120);
 		add(timerIcon);
 
 		flipCounterLabel.setFont(GuiUtil.PIXELFONTSMALL);
 		flipCounterLabel.setForeground(Color.BLACK);
-		flipCounterLabel.setBounds(30, 60, 180, 30);
+		flipCounterLabel.setBounds(40, 40, 180, 30);
 		add(flipCounterLabel);
 	}
 
-	
-	//UPDATE METHODS:
-	
-	//updates timer based on elapsed and max time, a "wrapper" toward timerIcon
-	public void updateTimer(int time, int maxTime) {
-		timerIcon.update(time, maxTime);
-	}
-	
-	public void updateFlipCounter(int remainingFlips) {
-		if (remainingFlips < 0) {
-			flipCounterLabel.setText("Flips: INF");
-		} else {
-			flipCounterLabel.setText("Flips: " + remainingFlips);
-		}
-	}
-	
-	//updates visuals based off data of players
 	public void update(Player currentPlayer) {
 		setIcon(deckImages.get(currentPlayer.getTeam()));
 
+		CardTypes[] playerDeck = currentPlayer.getDeck();
+		int activeDeckSize = (playerDeck != null) ? playerDeck.length : 0;
+		boolean canUseCard = currentPlayer.canUseCard() && !currentPlayer.hasUsedCardThisTurn();
+
 		for (int i = 0; i < currentDeck.length; i++) {
-			currentDeck[i].setIcon(ViewConstants.cardImages.get(currentPlayer.getDeck()[i]));
+			if (i < activeDeckSize && playerDeck[i] != null) {
+				currentDeck[i].setIcon(ViewConstants.cardImages.get(playerDeck[i]));
+				currentDeck[i].setVisible(true);
+				currentDeck[i].setEnabled(canUseCard);
+			} else {
+				currentDeck[i].setIcon(null);
+				currentDeck[i].setVisible(false); // Hide empty/unused slots
+				currentDeck[i].setEnabled(false);
+			}
 		}
 
 		updateFlipCounter(currentPlayer.getRemainingFlips());
 	}
-	
-	
-	//set if the card/ability buttons is enabled
+
 	public void setDeckButtonsEnabled(boolean isEnabled) {
 		for (JButton cardButton : currentDeck) {
 			cardButton.setEnabled(isEnabled);
@@ -94,8 +87,6 @@ public class DeckPanel extends JLabel {
 		return currentDeck;
 	}
 
-	
-	//Ui hover/selection logic
 	public void hoverCard(JButton card) {
 		if (hoveredCard == card) {
 			dehoverCard();
@@ -130,4 +121,17 @@ public class DeckPanel extends JLabel {
 		return selectedCard;
 	}
 
+	public void updateFlipCounter(int remainingFlips) {
+		if (remainingFlips < 0) {
+			flipCounterLabel.setText("Flips: Unlimited");
+		} else {
+			flipCounterLabel.setText("Flips: " + remainingFlips);
+		}
+	}
+
+	public void updateTimer(int secElapsed, int secLimit) {
+		if (timerIcon != null) {
+			timerIcon.update(secElapsed, secLimit);
+		}
+	}
 }

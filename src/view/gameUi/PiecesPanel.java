@@ -11,7 +11,7 @@ import shared.Team;
 public class PiecesPanel extends JLabel {
 
 	private static final ImageIcon img = new ImageIcon("resources/ui/PiecePanelFrame.png");
-	private Piece[] pieces = new Piece[0];
+	private Piece[] pieces;
 	private Piece hoveredPiece;
 	private Piece selectedPiece;
 	private JPanel piecesContentPanel;
@@ -35,10 +35,6 @@ public class PiecesPanel extends JLabel {
 			}
 		}
 
-		bonusOneByOnePiece = new Piece(new boolean[][] { { true } }, Team.RED);
-		bonusOneByOnePiece.setVisible(false);
-		piecesContentPanel.add(bonusOneByOnePiece);
-
 		JScrollPane scrollPane = new JScrollPane(piecesContentPanel);
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
@@ -48,14 +44,22 @@ public class PiecesPanel extends JLabel {
 		add(scrollPane);
 		revalidate();
 		repaint();
+		
+		if (PieceData.pieces != null && PieceData.pieces.length > 0) {
+			bonusOneByOnePiece = new Piece(PieceData.pieces[0], Team.RED);
+			bonusOneByOnePiece.setVisible(false);
+			piecesContentPanel.add(bonusOneByOnePiece);
+		}
+
+		
+	}
+	
+	public Piece getBonusOneByOnePiece() {
+		return bonusOneByOnePiece;
 	}
 
 	public Piece[] getPieces() {
 		return pieces;
-	}
-
-	public Piece getBonusOneByOnePiece() {
-		return bonusOneByOnePiece;
 	}
 
 	public int getPieceNum(Piece piece) {
@@ -69,7 +73,7 @@ public class PiecesPanel extends JLabel {
 		}
 		throw new IllegalArgumentException("Piece does not belong to PiecePanel");
 	}
-
+	
 	public Piece getSelectedPiece() {
 		return selectedPiece;
 	}
@@ -112,17 +116,18 @@ public class PiecesPanel extends JLabel {
 	
 	//yanjun
 	public void update(Player currentPlayer) {
-		if (currentPlayer == null) {
+		if (currentPlayer == null)
 			return;
-		}
 		for (int i = 0; i < pieces.length; i++) {
 			if (pieces[i] != null) {
 				pieces[i].setTeam(currentPlayer.getTeam());
 				pieces[i].setVisible(!currentPlayer.isUsed(i));
 			}
 		}
-		bonusOneByOnePiece.setTeam(currentPlayer.getTeam());
-		bonusOneByOnePiece.setVisible(currentPlayer.getBonusOneByOneCount() > 0);
+		if (bonusOneByOnePiece != null) {
+			bonusOneByOnePiece.setTeam(currentPlayer.getTeam());
+			bonusOneByOnePiece.setVisible(currentPlayer.getBonusOneByOneCount() > 0);
+		}
 		piecesContentPanel.revalidate();
 		piecesContentPanel.repaint();
 	}

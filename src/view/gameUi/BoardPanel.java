@@ -92,7 +92,7 @@ public class BoardPanel extends JPanel {
 		if (previewPieceData == null)
 			return;
 
-		g.setColor(Color.CYAN); // Temporary preview color.
+		g.setColor(Color.CYAN); // preview color
 		for (int x = 0; x < previewPieceData.length; x++) {
 			for (int y = 0; y < previewPieceData[x].length; y++) {
 				if (!previewPieceData[x][y])

@@ -23,16 +23,16 @@ public class SaveOverlay extends Overlay {
 
 		// Positioning close button inherited from Overlay
 		closeButton.setLocation(577, 146);
-		
+
 		// Style and position save button
-		saveButton.setBounds(220, 270, 112, 68); // Adjust width/height to match your image dimensions
+		saveButton.setBounds(220, 270, 112, 68);
 		add(saveButton);
-		
-		dontSaveButton.setBounds(370, 270, 112, 68); // Adjust width/height to match your image dimensions
+
+		dontSaveButton.setBounds(370, 270, 112, 68);
 		add(dontSaveButton);
 	}
-	
-	//GETTERS
+
+	// GETTERS
 	public JButton getSaveButton() {
 		return saveButton;
 	}

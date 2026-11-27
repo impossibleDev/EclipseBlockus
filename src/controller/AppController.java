@@ -3,6 +3,7 @@ package controller;
 import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
+
 import model.Game;
 import model.GameState;
 import view.AppFrame;
@@ -20,6 +21,18 @@ public class AppController {
 	private static SettingsOverlay settingsOverlay;
 	private static LeaderboardOverlay leaderboardOverlay; // melinda
 	private static GameState savedGameState = new GameState(); // melinda
+
+	public AppController() {
+		SoundService.loadSound("bgm", "resources/audio/BackgroundMusic.wav");
+		SoundService.loadSound("click", "resources/audio/Click.wav");
+		SoundService.loadSound("place", "resources/audio/PlacePiece.wav");
+
+		// start background music
+		SoundService.playMusic("bgm");
+
+		newGame();
+		view.toMenuScreen();
+	}
 
 	private void newGame() {
 		gameController = new GameController(this, view.getGameScreen());
@@ -47,7 +60,6 @@ public class AppController {
 
 		// if there is no previous file saved, start a new game
 		NewGameOverlay overlay = new NewGameOverlay();
-		overlay.setSize(overlay.getPreferredSize());
 
 		openOverlay(overlay);
 
@@ -101,7 +113,6 @@ public class AppController {
 	// displays help overlay
 	public static void showHelpOverlay() {
 		HelpPanelOverlay overlay = new HelpPanelOverlay();
-		overlay.setSize(700, 500);
 
 		openOverlay(overlay);
 
@@ -243,18 +254,6 @@ public class AppController {
 
 	static void exit() {
 		System.exit(0);
-	}
-
-	public AppController() {
-		SoundService.loadSound("bgm", "resources/audio/BackgroundMusic.wav");
-		SoundService.loadSound("click", "resources/audio/Click.wav");
-		SoundService.loadSound("place", "resources/audio/PlacePiece.wav");
-
-		// start background music
-		SoundService.playMusic("bgm");
-
-		newGame();
-		view.toMenuScreen();
 	}
 
 	public static AppFrame getView() {

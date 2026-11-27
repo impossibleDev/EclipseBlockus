@@ -17,26 +17,34 @@ public class PlayerCard extends JLabel {
 	private static final int iconPadding = 5;
 
 	// UI ELEMENTS
-	JLabel[] deck = new JLabel[GameConstants.deckSize];
+	private JLabel[] deckLabels = new JLabel[GameConstants.deckSize];
 
 	public PlayerCard() {
 		setSize(250, 110);
+		setLayout(null);
 
 		// init deck icons
-		for (int i = 0; i < deck.length; i++) {
-			deck[i] = new JLabel();
-			deck[i].setBounds(30 + (int) (iconSize + iconPadding) * i, 40, iconSize, iconSize);
-			add(deck[i]);
+		for (int i = 0; i < deckLabels.length; i++) {
+			deckLabels[i] = new JLabel();
+			deckLabels[i].setBounds(30 + (int) (iconSize + iconPadding) * i, 40, iconSize, iconSize);
+			add(deckLabels[i]);
 		}
-		update(new Player(Team.RED)); // TEST, REMOVE LATER!!!
 	}
 
-	public void update(Player player) {
-		for (int i = 0; i < deck.length; i++) {
-			if (player.getDeck()[i] != null) {
-				deck[i].setIcon(cardImages.get(player.getDeck()[i]));
-			}
+	public void update(Player currentPlayer) {
+		// Update team background/frame icon if needed
+		// setIcon(deckImages.get(currentPlayer.getTeam())); // Uncomment if deckImages applies to PlayerCard
 
+		CardTypes[] playerDeck = currentPlayer.getDeck();
+		for (int i = 0; i < deckLabels.length; i++) {
+			// Safely check if the index exists in the player's deck and is not null
+			if (playerDeck != null && i < playerDeck.length && playerDeck[i] != null) {
+				deckLabels[i].setIcon(cardImages.get(playerDeck[i]));
+				deckLabels[i].setVisible(true);
+			} else {
+				deckLabels[i].setIcon(null);
+				deckLabels[i].setVisible(false); // Hide empty/cooldown slots
+			}
 		}
 	}
 }

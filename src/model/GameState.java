@@ -14,7 +14,7 @@ public class GameState {
 
 	public void saveGame(Team[][] board, Player[] players, int cpuCount, int maxFlips, int timeLimit,
 			int currentPlayerIndex) {
-		// Create an independent deep copy of the board so future moves don't affect the
+		// Create an independent copy of the board so future moves don't affect the
 		// save
 		this.boardState = new Team[board.length][board[0].length];
 		for (int x = 0; x < board.length; x++) {

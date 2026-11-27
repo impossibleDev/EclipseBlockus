@@ -42,7 +42,6 @@ public class GameScreen extends Screen {
 	private JLabel currentCornerImage;
 	private JLabel bgLabel = new JLabel(bgImageIcon);
 	private EnumMap<Team, JLabel> cornerLabels = new EnumMap<>(Team.class);
-	private JLabel roundTimerLabel = new JLabel("Time: --", SwingConstants.CENTER); // melinda
 
 	// constructor
 	public GameScreen() {
@@ -65,10 +64,6 @@ public class GameScreen extends Screen {
 		helpButton = GuiUtil.createButton(ViewConstants.helpImage);
 		backButton = GuiUtil.createButton(backButtonImg, backButtonHoverImg);
 
-		roundTimerLabel.setFont(GuiUtil.PIXELFONTMEDIUM);
-		roundTimerLabel.setForeground(Color.WHITE);
-		roundTimerLabel.setBounds(350, 50, 500, 40);
-
 		add(backButton);
 		add(boardPanel);
 		add(deckPanel);
@@ -76,7 +71,6 @@ public class GameScreen extends Screen {
 		add(piecesScrollPane);
 		add(settingsButton);
 		add(helpButton);
-		add(roundTimerLabel);
 
 		// corner images
 		JLabel yellowCorner = new JLabel(cornerImages.get(Team.YELLOW));
@@ -122,7 +116,6 @@ public class GameScreen extends Screen {
 	//called in Timer events
 	public void tick(int secElapsed, int secLimit) {
 		deckPanel.updateTimer(secElapsed, secLimit);
-		roundTimerLabel.setText("Time: " + (secLimit-secElapsed) + "s");
 		
 	}
 
@@ -177,10 +170,6 @@ public class GameScreen extends Screen {
 
 	public JButton getBackButton() {
 		return backButton;
-	}
-
-	public JLabel getRoundTimerLabel() {
-		return roundTimerLabel;
 	}
 	
 	

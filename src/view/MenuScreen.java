@@ -4,20 +4,31 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-// melinda 
+// melinda
 public class MenuScreen extends Screen {
 	
-	// fields
+	// fields - aiden
+	public static final ImageIcon titleImg = new ImageIcon("resources/ui/BlokusTitle.gif");
 	public static final ImageIcon bgImageIcon = new ImageIcon("resources/bg/gameBg.png");
+	public static final ImageIcon playButtonImg = new ImageIcon("resources/ui/MenuPlayButton.png");
+	public static final ImageIcon playButtonHoverImg = new ImageIcon("resources/ui/MenuPlayButtonHover.png");
+	public static final ImageIcon helpButtonImg = new ImageIcon("resources/ui/MenuHelpButton.png");
+	public static final ImageIcon helpButtonHoverImg = new ImageIcon("resources/ui/MenuHelpButtonHover.png");
+	public static final ImageIcon quitButtonImg = new ImageIcon("resources/ui/MenuQuitButton.png");
+	public static final ImageIcon quitButtonHoverImg = new ImageIcon("resources/ui/MenuQuitButtonHover.png");
+	
 	private JLabel bgLabel = new JLabel(bgImageIcon);
-	private JLabel title;
+	private JLabel title = new JLabel(titleImg);
 	private JPanel buttonPanel;
 	private JButton settingsButton = GuiUtil.createButton(ViewConstants.settingsImage); // yanjun
-	private JButton[] buttons = { GuiUtil.createButton("PLAY"), GuiUtil.createButton("HELP"),
-			GuiUtil.createButton("QUIT") };
+	private JButton[] buttons = { GuiUtil.createButton(playButtonImg, playButtonHoverImg), 
+			GuiUtil.createButton(helpButtonImg, helpButtonHoverImg),
+			GuiUtil.createButton(quitButtonImg, quitButtonHoverImg), };
 
 	// constructor
 	public MenuScreen() {
+		
+		
 		// Use BorderLayout so the background image label fills the entire screen panel
 		setLayout(new BorderLayout());
 
@@ -35,23 +46,25 @@ public class MenuScreen extends Screen {
 		center.setLayout(new BoxLayout(center, BoxLayout.Y_AXIS));
 		center.setOpaque(false);
 
-		center.add(Box.createVerticalStrut(30));
+//		center.add(Box.createVerticalStrut(30));
 
-		title = new JLabel("BLOKUS", SwingConstants.CENTER);
-		title.setFont(GuiUtil.PIXELFONTBIG);
-		title.setForeground(Color.WHITE);
-		title.setAlignmentX(Component.CENTER_ALIGNMENT);
 		center.add(title); // Added directly to center panel instead of background
 
-		center.add(Box.createVerticalStrut(40));
+//		center.add(Box.createVerticalStrut(40));
 
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 		buttonPanel.setOpaque(false);
 
+		// Aiden
+		buttons[0].setActionCommand("PLAY");
+		buttons[1].setActionCommand("HELP");
+		
+		buttons[2].setActionCommand("QUIT");
 		for (JButton button : buttons) {
+			button.setAlignmentX(Component.CENTER_ALIGNMENT);
 			buttonPanel.add(button);
-			buttonPanel.add(Box.createVerticalStrut(15));
+			buttonPanel.add(Box.createVerticalStrut(10));
 		}
 
 		center.add(buttonPanel);
