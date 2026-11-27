@@ -1,3 +1,13 @@
+/*
+ * File: Piece.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Aiden, Melinda
+ * Date: November 27, 2026
+ * Description: Renders one polyomino piece and its selected appearance.
+ */
+
 package view.gameUi;
 
 import shared.Team;

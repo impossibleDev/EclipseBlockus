@@ -1,3 +1,13 @@
+/*
+ * File: Player.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Yanjun, Melinda
+ * Date: November 27, 2026
+ * Description: Stores player state, pieces, cards, and game options.
+ */
+
 package model;
 
 import shared.CardTypes;

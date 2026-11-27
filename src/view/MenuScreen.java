@@ -1,3 +1,13 @@
+/*
+ * File: MenuScreen.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Melinda, Aiden, Yanjun
+ * Date: November 27, 2026
+ * Description: Displays the main menu and its navigation buttons.
+ */
+
 package view;
 
 import java.awt.*;

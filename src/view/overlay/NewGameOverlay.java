@@ -1,3 +1,13 @@
+/*
+ * File: NewGameOverlay.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Melinda
+ * Date: November 27, 2026
+ * Description: Collects settings for starting a new game.
+ */
+
 package view.overlay;
 
 import java.awt.Color;

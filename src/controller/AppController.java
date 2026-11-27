@@ -1,3 +1,13 @@
+/*
+ * File: AppController.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Melinda, Yanjun
+ * Date: November 27, 2026
+ * Description: Coordinates application screens and major game actions.
+ */
+
 package controller;
 
 import javax.swing.JComponent;

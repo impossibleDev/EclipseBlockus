@@ -1,3 +1,13 @@
+/*
+ * File: CardTypes.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Not explicitly documented in source
+ * Date: November 27, 2026
+ * Description: Defines the available special card types.
+ */
+
 package shared;
 
 import model.Card;

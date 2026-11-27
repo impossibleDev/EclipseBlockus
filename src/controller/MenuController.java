@@ -1,3 +1,13 @@
+/*
+ * File: MenuController.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Melinda
+ * Date: November 27, 2026
+ * Description: Handles menu button actions and screen navigation.
+ */
+
 package controller;
 
 import java.awt.event.ActionEvent;

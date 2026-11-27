@@ -1,3 +1,13 @@
+/*
+ * File: TeamPanel.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Aiden
+ * Date: November 27, 2026
+ * Description: Displays the team player cards and their status.
+ */
+
 package view.gameUi;
 
 import javax.swing.*;

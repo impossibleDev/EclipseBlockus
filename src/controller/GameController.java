@@ -1,3 +1,13 @@
+/*
+ * File: GameController.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Aiden, Melinda, Yanjun
+ * Date: November 27, 2026
+ * Description: Handles game input and connects the game model to its interface.
+ */
+
 package controller;
 
 import java.awt.event.ActionEvent;

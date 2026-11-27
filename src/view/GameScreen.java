@@ -1,3 +1,13 @@
+/*
+ * File: GameScreen.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Aiden, Melinda
+ * Date: November 27, 2026
+ * Description: Builds and updates the main in-game interface.
+ */
+
 package view;
 
 import shared.Team;

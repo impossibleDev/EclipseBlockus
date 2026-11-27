@@ -1,3 +1,13 @@
+/*
+ * File: LeaderboardOverlay.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Melinda, Aiden
+ * Date: November 27, 2026
+ * Description: Displays sorted player scores and ranks at the end of a game.
+ */
+
 package view.overlay;
 
 import java.awt.Color;

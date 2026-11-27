@@ -1,3 +1,13 @@
+/*
+ * File: PiecePlacer.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Yanjun, Melinda
+ * Date: November 27, 2026
+ * Description: Provides piece placement and shape transformation utilities.
+ */
+
 package shared;
 
 import model.Player;

@@ -1,3 +1,13 @@
+/*
+ * File: SaveOverlay.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Melinda
+ * Date: November 27, 2026
+ * Description: Provides save and load controls for the game.
+ */
+
 package view.overlay;
 
 import javax.swing.ImageIcon;

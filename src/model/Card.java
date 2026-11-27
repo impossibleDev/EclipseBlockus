@@ -1,3 +1,13 @@
+/*
+ * File: Card.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Melinda, Yanjun, Aiden
+ * Date: November 27, 2026
+ * Description: Implements special card abilities used during gameplay.
+ */
+
 package model;
 
 import shared.GameConstants;

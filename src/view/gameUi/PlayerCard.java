@@ -1,3 +1,13 @@
+/*
+ * File: PlayerCard.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Not explicitly documented in source
+ * Date: November 27, 2026
+ * Description: Displays a player card and that player's remaining card icons.
+ */
+
 package view.gameUi;
 
 import model.Player;

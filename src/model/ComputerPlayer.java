@@ -1,3 +1,13 @@
+/*
+ * File: ComputerPlayer.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Yanjun
+ * Date: November 27, 2026
+ * Description: Determines and performs automated player moves.
+ */
+
 package model;
 
 import java.util.Random;

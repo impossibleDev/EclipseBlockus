@@ -1,3 +1,13 @@
+/*
+ * File: PiecesPanel.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Aiden, Yanjun
+ * Date: November 27, 2026
+ * Description: Displays available pieces and manages piece selection.
+ */
+
 package view.gameUi;
 
 import java.awt.GridLayout;

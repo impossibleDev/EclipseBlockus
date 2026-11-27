@@ -1,3 +1,13 @@
+/*
+ * File: TimerIcon.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Melinda, Aiden
+ * Date: November 27, 2026
+ * Description: Displays and redraws the remaining turn time.
+ */
+
 package view.gameUi;
 
 import javax.swing.*;

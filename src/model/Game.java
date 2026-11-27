@@ -1,3 +1,13 @@
+/*
+ * File: Game.java
+ * Project: SDP #1 - BLOKUS
+ * Course: [Course code, section, and instructor]
+ * Group: 5 (Aiden, Yanjun, Melinda)
+ * Contributors: Melinda, Yanjun
+ * Date: November 27, 2026
+ * Description: Contains the core game rules, board state, and turn logic.
+ */
+
 package model;
 
 import shared.CardTypes;
